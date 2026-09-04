@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --railway-navy: #0B192C;
+    --railway-slate: #1E3E62;
+    --railway-subtle: #27445D;
+    --railway-card: #FFFFFF;
+    --railway-bg: #F8FAFC;
+    --railway-border: #E2E8F0;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans min-h-screen overflow-x-hidden;
+  }
+}
+
+/* Custom scrollbar for high density enterprise tables & timeline */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.05); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2.5s infinite ease-in-out;
+}
+
+/* Badge styling helper */
+.badge-eng {
+  @apply bg-blue-50 text-blue-800 border border-blue-200;
+}
+.badge-sig {
+  @apply bg-amber-50 text-amber-800 border border-amber-200;
+}
+.badge-trac {
+  @apply bg-purple-50 text-purple-800 border border-purple-200;
+}
+.badge-coa {
+  @apply bg-teal-50 text-teal-800 border border-teal-200;
+}

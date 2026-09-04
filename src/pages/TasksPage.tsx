@@ -185,8 +185,51 @@ export const TasksPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Tasks Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+      {/* Mobile Tasks List View (Cards on phones & iPhones) */}
+      <div className="md:hidden space-y-3">
+        {filteredTasks.length === 0 ? (
+          <div className="bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-500 text-xs">
+            No maintenance tasks found matching your filters.
+          </div>
+        ) : (
+          filteredTasks.map(task => (
+            <div
+              key={task.id}
+              onClick={() => setSelectedTaskForDrawer(task)}
+              className="bg-white rounded-xl border border-slate-200 p-4 shadow-xs hover:border-blue-300 hover:shadow-md active:bg-blue-50/30 transition-all cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono font-bold text-xs bg-slate-900 text-white px-2 py-0.5 rounded">
+                    {task.id}
+                  </span>
+                  <span className="font-mono text-xs font-bold text-blue-600">[{task.assetId}]</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <StatusBadge status={task.criticality} variant="criticality" size="sm" />
+                </div>
+              </div>
+
+              <h4 className="text-xs font-bold text-slate-900 leading-snug">{task.defect}</h4>
+              <p className="text-[11px] text-slate-500 font-mono mt-1">{task.location}</p>
+
+              <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <StatusBadge status={task.department} variant="department" size="sm" />
+                  <span className="text-[10px] text-slate-500 font-mono">Due: {task.dueDate}</span>
+                </div>
+                <div className="flex items-center gap-1 text-blue-700 font-mono font-bold">
+                  <BrainCircuit className="w-3.5 h-3.5" />
+                  <span>{task.aiUrgencyScore}/100</span>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Main Tasks Table (Tablets & Desktop) */}
+      <div className="hidden md:block bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-slate-100/90 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px]">
@@ -284,28 +327,15 @@ export const TasksPage: React.FC = () => {
                     </td>
 
                     {/* Duration */}
-                    <td className="py-3.5 px-3 font-mono text-slate-700 font-semibold">
+                    <td className="py-3.5 px-3 font-mono text-slate-600">
                       {task.durationMin} min
                     </td>
 
                     {/* AI Score */}
-                    <td className="py-3.5 px-4 bg-blue-50/30">
-                      <div className="flex items-center gap-2">
-                        <div className="w-12 bg-slate-200 rounded-full h-2 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${
-                              task.aiUrgencyScore >= 90
-                                ? 'bg-red-600'
-                                : task.aiUrgencyScore >= 75
-                                ? 'bg-amber-500'
-                                : 'bg-emerald-500'
-                            }`}
-                            style={{ width: `${task.aiUrgencyScore}%` }}
-                          />
-                        </div>
-                        <span className="font-mono font-bold text-slate-900">
-                          {task.aiUrgencyScore}
-                        </span>
+                    <td className="py-3.5 px-4 bg-blue-50/30 font-mono font-bold text-blue-900">
+                      <div className="flex items-center gap-1.5">
+                        <span>{task.aiUrgencyScore}</span>
+                        <span className="text-[10px] text-slate-400 font-normal">/100</span>
                       </div>
                     </td>
 
@@ -321,10 +351,9 @@ export const TasksPage: React.FC = () => {
                           e.stopPropagation();
                           setSelectedTaskForDrawer(task);
                         }}
-                        className="p-1.5 rounded-md text-blue-600 hover:bg-blue-100 font-semibold text-xs inline-flex items-center gap-1"
+                        className="p-1.5 rounded-md hover:bg-slate-200 text-slate-600 group-hover:text-blue-600 transition-colors"
                       >
-                        <span>Details</span>
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <ChevronRight className="w-4 h-4" />
                       </button>
                     </td>
                   </tr>

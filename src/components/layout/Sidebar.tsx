@@ -71,29 +71,40 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
 
       <aside
         className={`fixed top-0 left-0 bottom-0 z-40 w-64 bg-railway-navy text-slate-300 flex flex-col justify-between border-r border-slate-800 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
-          isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+          isMobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
       >
-        {/* Top Branding */}
-        <div>
-          <div className="p-4 border-b border-slate-800/80 bg-slate-950/40">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center text-white shadow-md border border-blue-400/40">
-                <TrainTrack className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <h1 className="text-base font-extrabold text-white tracking-tight">
-                    RailSamanvay <span className="text-blue-400 font-mono">AI</span>
-                  </h1>
-                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">
-                    IR-OPS
-                  </span>
+        {/* Top Branding & Navigation (Scrollable container) */}
+        <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+          <div className="p-4 border-b border-slate-800/80 bg-slate-950/40 shrink-0">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center text-white shadow-md border border-blue-400/40 shrink-0">
+                  <TrainTrack className="w-6 h-6 text-white" />
                 </div>
-                <p className="text-[11px] text-slate-400 font-medium truncate max-w-[150px]">
-                  Automatic Block Planner
-                </p>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h1 className="text-base font-extrabold text-white tracking-tight">
+                      RailSamanvay <span className="text-blue-400 font-mono">AI</span>
+                    </h1>
+                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                      IR-OPS
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-400 font-medium truncate max-w-[140px]">
+                    Automatic Block Planner
+                  </p>
+                </div>
               </div>
+
+              {/* Close Button on Mobile */}
+              <button
+                onClick={onMobileClose}
+                aria-label="Close sidebar"
+                className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 lg:hidden"
+              >
+                <LogOut className="w-4 h-4 rotate-180" />
+              </button>
             </div>
 
             {/* Department Selector */}
@@ -116,9 +127,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
           </div>
 
           {/* Emergency Button */}
-          <div className="p-3">
+          <div className="p-3 shrink-0">
             <button
-              onClick={() => setIsEmergencyModalOpen(true)}
+              onClick={() => {
+                if (onMobileClose) onMobileClose();
+                setIsEmergencyModalOpen(true);
+              }}
               className="w-full py-2 px-3 rounded-lg bg-red-600/90 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all border border-red-500/50 hover:shadow-red-900/30 hover:shadow-md active:scale-98"
             >
               <AlertOctagon className="w-4 h-4 animate-pulse" />
@@ -127,7 +141,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
           </div>
 
           {/* Navigation Links */}
-          <nav className="px-3 py-1 space-y-0.5 overflow-y-auto max-h-[calc(100vh-380px)]">
+          <nav className="px-3 py-1 space-y-0.5 flex-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -162,8 +176,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
           </nav>
         </div>
 
-        {/* Bottom Section */}
-        <div className="p-3 border-t border-slate-800/80 bg-slate-950/40 space-y-3">
+        {/* Bottom Section with Safe Area Padding for iPhone Home Indicator */}
+        <div className="p-3 border-t border-slate-800/80 bg-slate-950/40 space-y-3 pb-safe shrink-0">
           {/* Integrated Systems Telemetry Pill */}
           <div className="p-2 rounded bg-slate-900/90 border border-slate-800 text-[11px]">
             <div className="flex items-center justify-between text-slate-400 mb-1">
@@ -194,7 +208,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
             </div>
 
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => {
+                if (onMobileClose) onMobileClose();
+                navigate('/login');
+              }}
               title="Sign Out / Switch User"
               className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded transition-colors"
             >

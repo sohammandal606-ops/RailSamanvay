@@ -55,18 +55,19 @@ export const LandingPage: React.FC = () => {
             <a href="#benefits" className="hover:text-white transition-colors">Benefits</a>
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/login"
-              className="text-xs font-semibold text-slate-200 hover:text-white px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors"
+              className="text-xs font-semibold text-slate-200 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors"
             >
               Sign In
             </Link>
             <Link
               to="/dashboard"
-              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5"
+              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5"
             >
-              <span>Explore Dashboard</span>
+              <span className="hidden sm:inline">Explore Dashboard</span>
+              <span className="sm:hidden">Dashboard</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -128,16 +129,17 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Stylized Gantt/Corridor Track */}
-            <div className="space-y-3 font-mono text-xs">
-              {/* Timeline ruler */}
-              <div className="grid grid-cols-6 gap-2 text-center text-slate-500 border-b border-slate-800 pb-2 text-[11px]">
-                <span>08:00</span>
-                <span>09:00</span>
-                <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">10:00 (START)</span>
-                <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">11:00 (SHADOW)</span>
-                <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">12:00 (CLEAR)</span>
-                <span>13:00</span>
-              </div>
+            <div className="overflow-x-auto pb-2 -mx-2 sm:mx-0 px-2 sm:px-0">
+              <div className="min-w-[560px] space-y-3 font-mono text-xs">
+                {/* Timeline ruler */}
+                <div className="grid grid-cols-6 gap-2 text-center text-slate-500 border-b border-slate-800 pb-2 text-[11px]">
+                  <span>08:00</span>
+                  <span>09:00</span>
+                  <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">10:00 (START)</span>
+                  <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">11:00 (SHADOW)</span>
+                  <span className="text-amber-400 font-bold bg-amber-500/10 rounded py-0.5">12:00 (CLEAR)</span>
+                  <span>13:00</span>
+                </div>
 
               {/* Engineering track */}
               <div className="flex items-center gap-3">
@@ -209,6 +211,7 @@ export const LandingPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+            </div>
             </div>
 
             {/* AI Callout */}

@@ -85,7 +85,7 @@ export const LoginPage: React.FC = () => {
       <div className="max-w-4xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-slate-700">
         
         {/* Left Branding Side */}
-        <div className="bg-gradient-to-br from-railway-navy via-slate-900 to-slate-950 p-8 sm:p-10 text-white flex flex-col justify-between border-r border-slate-800">
+        <div className="bg-gradient-to-br from-railway-navy via-slate-900 to-slate-950 p-6 sm:p-8 lg:p-10 text-white flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-800">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg border border-blue-400/40">
@@ -130,7 +130,7 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* Right Login Card Side */}
-        <div className="bg-white p-8 sm:p-10 flex flex-col justify-between">
+        <div className="bg-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
           <div>
             <div className="mb-6">
               <h2 className="text-xl font-bold text-slate-900 tracking-tight">

@@ -96,7 +96,13 @@ export const CorridorVisualizer: React.FC<CorridorVisualizerProps> = ({
       </div>
 
       {/* Interactive Corridor Rail Track Visualizer */}
-      <div className="py-6 px-3 sm:px-6 bg-slate-900 rounded-lg text-white relative overflow-x-auto">
+      <div className="py-5 px-3 sm:px-6 bg-slate-900 rounded-xl text-white relative overflow-x-auto shadow-inner">
+        {/* Mobile Swipe Notice */}
+        <div className="flex sm:hidden items-center justify-between text-[10px] text-blue-300 font-mono mb-3 px-1">
+          <span>↔ Swipe to inspect full corridor</span>
+          <span className="text-slate-400">KM 0 – 260</span>
+        </div>
+
         <div className="min-w-[700px]">
           {/* Top Track Label */}
           <div className="flex justify-between items-center text-xs text-slate-400 mb-6 font-mono font-medium">

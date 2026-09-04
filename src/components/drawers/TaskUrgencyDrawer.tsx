@@ -224,22 +224,22 @@ export const TaskUrgencyDrawer: React.FC<TaskUrgencyDrawerProps> = ({ task, onCl
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-slate-100 border-t border-slate-200 flex items-center justify-between gap-3">
+        <div className="p-4 bg-slate-100 border-t border-slate-200 flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-2.5 pb-safe">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
+            className="w-full sm:w-auto px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
           >
             Close Panel
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <button
               onClick={() => {
                 onClose();
                 navigate('/planner');
               }}
-              className="px-4 py-2 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 flex items-center gap-1.5"
+              className="px-4 py-2 text-xs font-semibold text-blue-700 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1.5 transition-colors"
             >
-              View in Planner
+              <span>View in Planner</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button
@@ -247,10 +247,10 @@ export const TaskUrgencyDrawer: React.FC<TaskUrgencyDrawerProps> = ({ task, onCl
                 onClose();
                 runAiOptimization();
               }}
-              className="px-4 py-2 text-xs font-bold text-white bg-railway-navy hover:bg-railway-slate rounded-md flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 text-xs font-bold text-white bg-railway-navy hover:bg-railway-slate rounded-lg flex items-center justify-center gap-1.5 shadow-sm transition-colors"
             >
               <Zap className="w-3.5 h-3.5 text-amber-400" />
-              Re-optimize Corridor Block
+              <span>Re-optimize Block</span>
             </button>
           </div>
         </div>

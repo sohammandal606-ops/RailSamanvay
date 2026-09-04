@@ -175,14 +175,17 @@ export const BlockPlannerPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200 font-mono font-bold">
+            <span className="sm:hidden text-[10px] text-blue-600 font-mono">
+              ↔ Swipe timeline
+            </span>
+            <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200 font-mono font-bold text-[11px] sm:text-xs">
               Integrated Window: 10:00 - 12:00
             </span>
           </div>
         </div>
 
         {/* Timeline Grid Container */}
-        <div className="overflow-x-auto pb-4">
+        <div className="overflow-x-auto pb-4 -mx-2 sm:mx-0 px-2 sm:px-0">
           <div className="min-w-[850px] space-y-4">
             
             {/* Time Scale Header */}

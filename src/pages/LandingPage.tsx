@@ -27,22 +27,23 @@ export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans w-full max-w-full overflow-x-hidden">
       {/* Top Enterprise Header */}
-      <header className="sticky top-0 z-50 bg-railway-navy/95 backdrop-blur-md border-b border-slate-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md border border-blue-400/30">
-              <TrainTrack className="w-6 h-6" />
+      <header className="sticky top-0 z-50 bg-railway-navy/95 backdrop-blur-md border-b border-slate-800 text-white w-full max-w-full">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+          {/* Logo & Title */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md border border-blue-400/30 shrink-0">
+              <TrainTrack className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-extrabold tracking-tight">RailSamanvay</span>
-                <span className="text-xs font-mono font-bold bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-400/30">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-base sm:text-lg font-extrabold tracking-tight truncate">RailSamanvay</span>
+                <span className="text-[10px] sm:text-xs font-mono font-bold bg-blue-500/20 text-blue-300 px-1.5 sm:px-2 py-0.5 rounded border border-blue-400/30 shrink-0">
                   AI
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-mono">
+              <p className="text-[10px] text-slate-400 font-mono truncate hidden sm:block">
                 Indian Railways Automatic Block Planning
               </p>
             </div>
@@ -55,16 +56,16 @@ export const LandingPage: React.FC = () => {
             <a href="#benefits" className="hover:text-white transition-colors">Benefits</a>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             <Link
               to="/login"
-              className="text-xs font-semibold text-slate-200 hover:text-white px-2.5 sm:px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors"
+              className="text-xs font-semibold text-slate-200 hover:text-white px-2 sm:px-3 py-1.5 rounded-md hover:bg-slate-800 transition-colors whitespace-nowrap"
             >
               Sign In
             </Link>
             <Link
               to="/dashboard"
-              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5"
+              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm transition-all flex items-center gap-1 sm:gap-1.5 shrink-0 whitespace-nowrap active:scale-95"
             >
               <span className="hidden sm:inline">Explore Dashboard</span>
               <span className="sm:hidden">Dashboard</span>
@@ -75,29 +76,29 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-railway-navy via-slate-900 to-slate-950 text-white pt-16 pb-24 px-4 sm:px-6">
+      <section className="relative overflow-hidden bg-gradient-to-b from-railway-navy via-slate-900 to-slate-950 text-white pt-12 sm:pt-16 pb-16 sm:pb-24 px-3 sm:px-6 w-full max-w-full">
         {/* Subtle grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="max-w-7xl mx-auto relative z-10 w-full">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-mono font-medium mb-4">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span>SIH 2026 AI Operations Innovation</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-5xl font-extrabold tracking-tight leading-tight px-1 break-words">
               Intelligent Railway Maintenance{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">
                 Block Planning
               </span>
             </h1>
 
-            <p className="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
+            <p className="mt-4 text-xs sm:text-base text-slate-300 leading-relaxed font-normal px-2 max-w-2xl mx-auto break-words">
               AI-powered coordination of Engineering, S&T and Traction maintenance blocks to maximize infrastructure availability and minimize asset downtime.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto">
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto">
               <Link
                 to="/dashboard"
                 className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold shadow-lg shadow-blue-900/40 flex items-center justify-center gap-2 transition-all active:scale-98"
@@ -115,11 +116,11 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Interactive Stylized Hero Visualizer (Railway Corridor & Multi-department Coordinated Shadow Block) */}
-          <div className="bg-slate-900/90 rounded-2xl border border-slate-700 p-4 sm:p-6 shadow-2xl overflow-hidden backdrop-blur-md">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-800 text-xs">
+          <div className="bg-slate-900/90 rounded-2xl border border-slate-700 p-3 sm:p-6 shadow-2xl overflow-hidden backdrop-blur-md w-full max-w-full min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 sm:pb-4 mb-3 sm:mb-4 border-b border-slate-800 text-xs">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono font-bold text-white uppercase text-[11px] sm:text-xs">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                <span className="font-mono font-bold text-white uppercase text-[10px] sm:text-xs truncate">
                   Corridor Coordinated Planning Visualization (KM 140 – KM 146)
                 </span>
               </div>
@@ -130,7 +131,7 @@ export const LandingPage: React.FC = () => {
             </div>
 
             {/* Stylized Gantt/Corridor Track */}
-            <div className="overflow-x-auto pb-2 -mx-2 sm:mx-0 px-2 sm:px-0">
+            <div className="overflow-x-auto pb-2 w-full max-w-full">
               <div className="min-w-[560px] space-y-3 font-mono text-xs">
                 {/* Timeline ruler */}
                 <div className="grid grid-cols-6 gap-2 text-center text-slate-500 border-b border-slate-800 pb-2 text-[11px]">

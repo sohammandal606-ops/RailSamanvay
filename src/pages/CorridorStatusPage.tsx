@@ -38,10 +38,10 @@ export const CorridorStatusPage: React.FC = () => {
         <button
           onClick={runAiOptimization}
           disabled={isOptimizing}
-          className="px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition-all disabled:opacity-50"
+          className="w-full sm:w-auto px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98"
         >
           <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-          <span>Refresh Corridor Telemetry</span>
+          <span>{isOptimizing ? 'Refreshing...' : 'Refresh Corridor Telemetry'}</span>
         </button>
       </div>
 
@@ -49,11 +49,11 @@ export const CorridorStatusPage: React.FC = () => {
       <CorridorVisualizer corridors={corridors} />
 
       {/* Detailed Section Status Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {corridors.map(sec => (
           <div
             key={sec.id}
-            className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between"
+            className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col justify-between"
           >
             <div>
               <div className="flex items-start justify-between pb-3 border-b border-slate-100">
@@ -71,7 +71,7 @@ export const CorridorStatusPage: React.FC = () => {
                 <StatusBadge status={sec.status} variant="corridorStatus" size="md" />
               </div>
 
-              <div className="grid grid-cols-2 gap-3 my-4 text-xs">
+              <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3 my-4 text-xs">
                 <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200">
                   <span className="text-slate-500 block">Next Block Window</span>
                   <span className="font-mono font-bold text-slate-900 text-xs mt-1 flex items-center gap-1">

@@ -251,11 +251,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onMenuToggle }) => {
         <button
           onClick={runAiOptimization}
           disabled={isOptimizing}
-          className="flex items-center gap-1.5 bg-railway-navy hover:bg-railway-slate text-white px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs disabled:opacity-50"
+          className="flex items-center gap-1.5 bg-railway-navy hover:bg-railway-slate text-white px-2 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs disabled:opacity-50 active:scale-95 shrink-0"
+          title="Run AI Optimization"
         >
           <Zap className={`w-3.5 h-3.5 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
           <span className="hidden sm:inline">{isOptimizing ? 'Optimizing...' : 'Run AI Optimization'}</span>
-          <span className="sm:hidden">{isOptimizing ? '...' : 'Optimize'}</span>
+          <span className="hidden xs:inline sm:hidden">{isOptimizing ? '...' : 'Optimize'}</span>
         </button>
 
         {/* Active Department Pill */}

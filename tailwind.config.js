@@ -5,7 +5,17 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      'xs': '360px',
+      ...require('tailwindcss/defaultTheme').screens,
+    },
     extend: {
+      gridTemplateColumns: {
+        '13': 'repeat(13, minmax(0, 1fr))',
+      },
+      scale: {
+        '102': '1.02',
+      },
       colors: {
         railway: {
           darkest: '#07111E',

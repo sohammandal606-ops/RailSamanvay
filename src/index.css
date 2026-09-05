@@ -20,61 +20,58 @@
   }
 }
 
-/* Touch-friendly scrolling for tablets & iOS iPhones */
+/* Touch-friendly scrolling for mobile/tablet */
 * {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Safe area utilities for iPhone Notch and Home bar */
-.pt-safe {
-  padding-top: env(safe-area-inset-top, 0px);
-}
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.pl-safe {
-  padding-left: env(safe-area-inset-left, 0px);
-}
-.pr-safe {
-  padding-right: env(safe-area-inset-right, 0px);
-}
+/* Safe area utilities */
+.pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+.pl-safe { padding-left: env(safe-area-inset-left, 0px); }
+.pr-safe { padding-right: env(safe-area-inset-right, 0px); }
 
-/* Custom scrollbar for high density enterprise tables & timeline */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 3px;
+  background: #cbd5e1;
+  border-radius: 4px;
+  border: 2px solid #f8fafc;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #94a3b8;
 }
 
-/* Pulse animation for live indicators */
+/* Animations */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.05); }
+  50% { opacity: 0.75; transform: scale(1.02); }
 }
 
 .animate-pulse-subtle {
-  animation: pulse-subtle 2.5s infinite ease-in-out;
+  animation: pulse-subtle 3s infinite ease-in-out;
 }
 
-/* Badge styling helper */
-.badge-eng {
-  @apply bg-blue-50 text-blue-800 border border-blue-200;
+/* Responsive Table/Container Helpers */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
 }
-.badge-sig {
-  @apply bg-amber-50 text-amber-800 border border-amber-200;
+
+@media (max-width: 640px) {
+  .container-fluid {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
-.badge-trac {
-  @apply bg-purple-50 text-purple-800 border border-purple-200;
-}
-.badge-coa {
-  @apply bg-teal-50 text-teal-800 border border-teal-200;
-}
+
+/* Badge styling */
+.badge-eng { @apply bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+.badge-sig { @apply bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+.badge-trac { @apply bg-purple-50 text-purple-800 border border-purple-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+.badge-coa { @apply bg-teal-50 text-teal-800 border border-teal-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }

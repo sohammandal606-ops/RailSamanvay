@@ -86,10 +86,10 @@ export const TasksPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setIsEmergencyModalOpen(true)}
-            className="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98"
           >
             <Flame className="w-4 h-4" />
             <span>Emergency Request</span>
@@ -98,10 +98,10 @@ export const TasksPage: React.FC = () => {
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all disabled:opacity-50"
+            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all disabled:opacity-50 active:scale-98"
           >
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Run AI Block Optimization</span>
+            <span>{isOptimizing ? 'Optimizing...' : 'Run AI Block Optimization'}</span>
           </button>
         </div>
       </div>

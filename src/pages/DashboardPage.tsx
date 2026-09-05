@@ -110,10 +110,10 @@ export const DashboardPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setIsEmergencyModalOpen(true)}
-            className="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98 shrink-0"
           >
             <Flame className="w-4 h-4" />
             <span>Emergency Request</span>
@@ -122,16 +122,16 @@ export const DashboardPage: React.FC = () => {
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition-all disabled:opacity-50"
+            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98 shrink-0"
           >
             <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-            <span>{isOptimizing ? 'Optimizing Corridor...' : 'Run AI Optimization'}</span>
+            <span>{isOptimizing ? 'Optimizing...' : 'Run AI Optimization'}</span>
           </button>
         </div>
       </div>
 
       {/* Top 6 KPI Cards (Section 3 Requirement) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
         <KPICard
           title="Total Tasks"
           value="1,248"

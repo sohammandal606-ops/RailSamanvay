@@ -115,7 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
               <select
                 value={currentDepartment}
                 onChange={handleDeptChange}
-                className="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-200 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-200 rounded-md px-2.5 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 <option value="Control Office">Control Office (COA)</option>
                 <option value="Engineering">Engineering (TMS - P.Way)</option>
@@ -133,7 +133,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
                 if (onMobileClose) onMobileClose();
                 setIsEmergencyModalOpen(true);
               }}
-              className="w-full py-2 px-3 rounded-lg bg-red-600/90 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all border border-red-500/50 hover:shadow-red-900/30 hover:shadow-md active:scale-98"
+              className="w-full py-2.5 px-3 rounded-lg bg-red-600/90 hover:bg-red-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all border border-red-500/50 hover:shadow-red-900/30 hover:shadow-md active:scale-98 min-h-[44px]"
             >
               <AlertOctagon className="w-4 h-4 animate-pulse" />
               <span>EMERGENCY BLOCK REQUEST</span>
@@ -148,7 +148,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
                 to={item.to}
                 onClick={onMobileClose}
                 className={({ isActive }) =>
-                  `flex items-center justify-between px-3 py-2 rounded-md text-xs font-semibold transition-all duration-150 ${
+                  `flex items-center justify-between px-3 py-2.5 lg:py-2 rounded-md text-xs font-semibold transition-all duration-150 min-h-[40px] ${
                     isActive
                       ? 'bg-blue-600 text-white shadow-xs'
                       : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'

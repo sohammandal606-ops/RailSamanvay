@@ -63,10 +63,10 @@ export const BlockPlannerPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setIsEmergencyModalOpen(true)}
-            className="px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98 shrink-0"
           >
             <Flame className="w-4 h-4" />
             <span>Emergency Request</span>
@@ -75,10 +75,10 @@ export const BlockPlannerPage: React.FC = () => {
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition-all disabled:opacity-50"
+            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98 shrink-0"
           >
             <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-            <span>{isOptimizing ? 'Synthesizing Coordinated Blocks...' : 'Run AI Optimization'}</span>
+            <span>{isOptimizing ? 'Synthesizing...' : 'Run AI Optimization'}</span>
           </button>
         </div>
       </div>
@@ -188,20 +188,28 @@ export const BlockPlannerPage: React.FC = () => {
         <div className="overflow-x-auto pb-4 -mx-2 sm:mx-0 px-2 sm:px-0">
           <div className="min-w-[850px] space-y-4">
             
-            {/* Time Scale Header */}
-            <div className="grid grid-cols-13 gap-1 text-center font-mono text-xs text-slate-500 border-b border-slate-200 pb-2">
-              {timeSlots.map(time => (
-                <div key={time} className="py-1">
-                  <span className={time >= '10:00' && time <= '12:00' ? 'text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded' : ''}>
-                    {time}
-                  </span>
-                </div>
-              ))}
+            {/* Time Scale Header (Aligned with track labels) */}
+            <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
+              <div className="w-28 sm:w-32 text-xs font-mono font-bold text-slate-400 shrink-0">
+                Timeline (IST)
+              </div>
+              <div className="flex-1 grid grid-cols-12 gap-1 text-center font-mono text-xs text-slate-500">
+                {timeSlots.slice(0, 12).map((time) => {
+                  const isWindow = time === '10:00' || time === '11:00';
+                  return (
+                    <div key={time} className="py-1">
+                      <span className={isWindow ? 'text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200/50' : ''}>
+                        {time}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Track 1: Engineering (TMS) */}
             <div className="flex items-center gap-3">
-              <div className="w-32 text-xs font-bold text-blue-900 shrink-0 flex items-center gap-1.5">
+              <div className="w-28 sm:w-32 text-xs font-bold text-blue-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-blue-600" />
                 <span>Engineering (Track)</span>
               </div>
@@ -231,7 +239,7 @@ export const BlockPlannerPage: React.FC = () => {
 
             {/* Track 2: S&T (Signalling - SMMS) */}
             <div className="flex items-center gap-3">
-              <div className="w-32 text-xs font-bold text-amber-900 shrink-0 flex items-center gap-1.5">
+              <div className="w-28 sm:w-32 text-xs font-bold text-amber-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-amber-600" />
                 <span>S&T (Signals)</span>
               </div>
@@ -261,7 +269,7 @@ export const BlockPlannerPage: React.FC = () => {
 
             {/* Track 3: Traction (OHE - TDMS) */}
             <div className="flex items-center gap-3">
-              <div className="w-32 text-xs font-bold text-purple-900 shrink-0 flex items-center gap-1.5">
+              <div className="w-28 sm:w-32 text-xs font-bold text-purple-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-purple-600" />
                 <span>Traction (OHE)</span>
               </div>
@@ -291,7 +299,7 @@ export const BlockPlannerPage: React.FC = () => {
 
             {/* Track 4: Train Operations (COA) */}
             <div className="flex items-center gap-3 pt-2">
-              <div className="w-32 text-xs font-bold text-slate-900 shrink-0 flex items-center gap-1.5">
+              <div className="w-28 sm:w-32 text-xs font-bold text-slate-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-emerald-600" />
                 <span>Train Operations</span>
               </div>
@@ -366,10 +374,10 @@ export const BlockPlannerPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => navigate(`/approval/${selectedPlan.id}`)}
-                className="px-4 py-2 bg-white text-blue-700 border border-blue-300 hover:bg-blue-50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-white text-blue-700 border border-blue-300 hover:bg-blue-50 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors active:scale-98"
               >
                 <span>Inspect Safety Rules & Validation</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -377,7 +385,7 @@ export const BlockPlannerPage: React.FC = () => {
               {selectedPlan.status === 'Pending Approval' && (
                 <button
                   onClick={() => approveBlockPlan(selectedPlan.id)}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+                  className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Approve Block Plan</span>

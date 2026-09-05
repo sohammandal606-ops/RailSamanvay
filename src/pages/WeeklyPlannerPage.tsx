@@ -88,56 +88,62 @@ export const WeeklyPlannerPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => {
               showToast('Schedule Exported', 'Weekly master block plan downloaded as CSV.', 'success');
             }}
-            className="px-3.5 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            className="flex-1 sm:flex-initial px-3.5 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors active:scale-98"
           >
             <Download className="w-4 h-4 text-slate-500" />
-            <span>Export Master Plan</span>
+            <span className="hidden xs:inline">Export Master Plan</span>
+            <span className="xs:hidden">Export</span>
           </button>
 
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition-all disabled:opacity-50"
+            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98"
           >
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Generate Optimized Weekly Plan</span>
+            <span>{isOptimizing ? 'Optimizing...' : 'Generate Plan'}</span>
           </button>
         </div>
       </div>
 
       {/* Legend & Summary Metrics */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div className="flex flex-wrap items-center gap-4">
+      <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 sm:gap-4 text-xs">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-amber-400" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-amber-400" />
             <span className="font-semibold text-slate-700">Pending Approval</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-emerald-500" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-emerald-500" />
             <span className="font-semibold text-slate-700">Approved & Cleared</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-blue-500" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-blue-500" />
             <span className="font-semibold text-slate-700">Planned Routine</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded bg-purple-500" />
+            <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded bg-purple-500" />
             <span className="font-semibold text-slate-700">Integrated Multi-Dept</span>
           </div>
         </div>
 
-        <div className="font-mono text-slate-500 text-[11px]">
+        <div className="font-mono text-slate-500 text-[10px] sm:text-[11px]">
           19 Scheduled Blocks • 0 Punctuality Violations
         </div>
       </div>
 
       {/* Weekly Matrix Table */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-xs overflow-hidden">
+        {/* Mobile Swipe Hint */}
+        <div className="sm:hidden px-3 py-1.5 bg-blue-50/80 border-b border-blue-100 flex items-center justify-between text-[11px] text-blue-700 font-medium">
+          <span>↔ Swipe table horizontally to see full week</span>
+          <span className="font-mono text-[10px] bg-blue-100 px-1.5 py-0.5 rounded">7 Days</span>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse min-w-[1000px]">
             <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px]">

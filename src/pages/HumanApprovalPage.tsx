@@ -57,12 +57,12 @@ export const HumanApprovalPage: React.FC = () => {
         </div>
 
         {/* Filter Status Switcher */}
-        <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-slate-200 text-xs">
+        <div className="flex items-center gap-1 sm:gap-2 bg-white p-1 rounded-lg border border-slate-200 text-xs overflow-x-auto max-w-full shrink-0">
           {(['ALL', 'Pending Approval', 'Approved', 'Rejected'] as const).map((st) => (
             <button
               key={st}
               onClick={() => setFilterStatus(st)}
-              className={`px-3 py-1.5 rounded-md font-semibold transition-all ${
+              className={`px-2.5 sm:px-3 py-1.5 rounded-md font-semibold transition-all whitespace-nowrap text-xs ${
                 filterStatus === st
                   ? 'bg-railway-navy text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
@@ -213,28 +213,28 @@ export const HumanApprovalPage: React.FC = () => {
                   {plan.history[plan.history.length - 1]?.action} by {plan.history[plan.history.length - 1]?.actor}
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                   <button
                     onClick={() => navigate(`/approval/${plan.id}`)}
-                    className="px-3.5 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5"
+                    className="flex-1 sm:flex-initial px-3 sm:px-3.5 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center justify-center gap-1.5 active:scale-98"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
-                    <span>Modify Parameters</span>
+                    <span>Modify</span>
                   </button>
 
                   {plan.status === 'Pending Approval' && (
                     <>
                       <button
                         onClick={() => rejectBlockPlan(plan.id, 'Operating timetable slack conflict')}
-                        className="px-3.5 py-1.5 rounded-lg border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-bold flex items-center gap-1.5"
+                        className="flex-1 sm:flex-initial px-3 sm:px-3.5 py-1.5 rounded-lg border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-bold flex items-center justify-center gap-1.5 active:scale-98"
                       >
                         <XCircle className="w-3.5 h-3.5" />
-                        <span>Reject Plan</span>
+                        <span>Reject</span>
                       </button>
 
                       <button
                         onClick={() => approveBlockPlan(plan.id)}
-                        className="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+                        className="w-full sm:w-auto sm:flex-initial px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98"
                       >
                         <Check className="w-4 h-4" />
                         <span>Authorize Block Plan</span>

@@ -206,7 +206,7 @@ export const CorridorVisualizer: React.FC<CorridorVisualizerProps> = ({
             </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-3 border-t border-slate-200 text-xs">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 mt-4 pt-3 border-t border-slate-200 text-xs">
             <div className="bg-white p-2.5 rounded border border-slate-200">
               <span className="text-slate-500 block">Next Available Block Window</span>
               <span className="font-bold text-slate-900 font-mono flex items-center gap-1 mt-1">

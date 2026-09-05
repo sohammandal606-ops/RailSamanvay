@@ -97,17 +97,17 @@ export const LandingPage: React.FC = () => {
               AI-powered coordination of Engineering, S&T and Traction maintenance blocks to maximize infrastructure availability and minimize asset downtime.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto">
               <Link
                 to="/dashboard"
-                className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold shadow-lg shadow-blue-900/40 flex items-center gap-2 transition-all"
+                className="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold shadow-lg shadow-blue-900/40 flex items-center justify-center gap-2 transition-all active:scale-98"
               >
                 <span>Explore Live Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <a
                 href="#how-it-works"
-                className="px-6 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 text-sm font-semibold transition-all"
+                className="px-6 py-3 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-200 border border-slate-700 text-sm font-semibold transition-all text-center active:scale-98"
               >
                 View How It Works
               </a>
@@ -115,16 +115,17 @@ export const LandingPage: React.FC = () => {
           </div>
 
           {/* Interactive Stylized Hero Visualizer (Railway Corridor & Multi-department Coordinated Shadow Block) */}
-          <div className="bg-slate-900/90 rounded-2xl border border-slate-700 p-6 shadow-2xl overflow-hidden backdrop-blur-md">
+          <div className="bg-slate-900/90 rounded-2xl border border-slate-700 p-4 sm:p-6 shadow-2xl overflow-hidden backdrop-blur-md">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-4 border-b border-slate-800 text-xs">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="font-mono font-bold text-white uppercase">
+                <span className="font-mono font-bold text-white uppercase text-[11px] sm:text-xs">
                   Corridor Coordinated Planning Visualization (KM 140 – KM 146)
                 </span>
               </div>
-              <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
-                <span>TMS Track</span> • <span>SMMS Signals</span> • <span>TDMS OHE Power</span>
+              <div className="flex items-center justify-between sm:justify-end gap-3 font-mono text-[10px] sm:text-[11px] text-slate-400">
+                <span className="sm:hidden text-amber-300 font-sans">↔ Swipe timeline</span>
+                <span>TMS Track • SMMS Signals • TDMS Power</span>
               </div>
             </div>
 
@@ -231,29 +232,29 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="bg-white border-y border-slate-200 py-10 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="p-4">
-            <div className="text-3xl font-extrabold text-slate-900 font-mono">3 Depts</div>
-            <div className="text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
+      <section className="bg-white border-y border-slate-200 py-8 sm:py-10 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+          <div className="p-3 sm:p-4">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono">3 Depts</div>
+            <div className="text-[11px] sm:text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
               TMS, SMMS & TDMS Integrated
             </div>
           </div>
-          <div className="p-4 border-l border-slate-200">
-            <div className="text-3xl font-extrabold text-blue-600 font-mono">24 / 7</div>
-            <div className="text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
+          <div className="p-3 sm:p-4 border-l border-slate-200">
+            <div className="text-2xl sm:text-3xl font-extrabold text-blue-600 font-mono">24 / 7</div>
+            <div className="text-[11px] sm:text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
               Control Room Planning Support
             </div>
           </div>
-          <div className="p-4 border-l border-slate-200">
-            <div className="text-3xl font-extrabold text-emerald-600 font-mono">Weekly & Monthly</div>
-            <div className="text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
+          <div className="p-3 sm:p-4 border-t md:border-t-0 md:border-l border-slate-200">
+            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-600 font-mono">Weekly & Monthly</div>
+            <div className="text-[11px] sm:text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
               Dynamic Lookahead Planning
             </div>
           </div>
-          <div className="p-4 border-l border-slate-200">
-            <div className="text-3xl font-extrabold text-purple-600 font-mono">100% G&SR</div>
-            <div className="text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
+          <div className="p-3 sm:p-4 border-t md:border-t-0 border-l border-slate-200">
+            <div className="text-2xl sm:text-3xl font-extrabold text-purple-600 font-mono">100% G&SR</div>
+            <div className="text-[11px] sm:text-xs text-slate-500 mt-1 font-semibold uppercase tracking-wider">
               Railway Safety Rules Validated
             </div>
           </div>
@@ -516,10 +517,10 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-950 text-slate-400 py-12 px-4 sm:px-6 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs">
+      <footer className="bg-slate-950 text-slate-400 py-10 sm:py-12 px-4 sm:px-6 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-center sm:text-left">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-bold shrink-0">
               <TrainTrack className="w-5 h-5" />
             </div>
             <div>
@@ -528,14 +529,14 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-6 text-slate-400">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-slate-400">
             <Link to="/dashboard" className="hover:text-white">Dashboard</Link>
             <Link to="/planner" className="hover:text-white">Block Planner</Link>
             <Link to="/approval" className="hover:text-white">Approval Queue</Link>
             <Link to="/login" className="hover:text-white">Sign In</Link>
           </div>
 
-          <div className="text-right text-[11px] font-mono text-slate-500">
+          <div className="text-center sm:text-right text-[11px] font-mono text-slate-500">
             <div>Internal Enterprise System Mock</div>
             <div>Indian Railways Operating & Maintenance Prototype</div>
           </div>

@@ -429,6 +429,67 @@ export const BlockPlannerPage: React.FC = () => {
           </div>
         </div>
 
+        {/* OR-Tools CP-SAT Short-Term Solver Telemetry Panel */}
+        <div className="mt-6 bg-slate-900 text-slate-100 rounded-xl p-5 border border-slate-800 shadow-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-800 gap-2 mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 bg-purple-500/20 text-purple-400 rounded-lg">
+                <Sparkles className="w-5 h-5 text-purple-400" />
+              </div>
+              <div>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                  <span>OR-Tools CP-SAT Constraint Optimization Engine (Short-Term Solver)</span>
+                  <span className="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded">
+                    STATUS: OPTIMAL
+                  </span>
+                </h3>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Multi-objective mathematical formulation for shadow block consolidation & timetable deconfliction
+                </p>
+              </div>
+            </div>
+            <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded">
+              Simulation / Demo Data
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            {/* Solver Telemetry */}
+            <div className="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800 space-y-2">
+              <span className="font-bold text-purple-300 uppercase text-[10px] block">CP-SAT Solver Metrics</span>
+              <div className="space-y-1.5 font-mono text-[11px] text-slate-300">
+                <div className="flex justify-between"><span>Decision Variables:</span><strong className="text-white">1,480</strong></div>
+                <div className="flex justify-between"><span>Linear Constraints:</span><strong className="text-white">3,920</strong></div>
+                <div className="flex justify-between"><span>Solver Runtime:</span><strong className="text-emerald-400">42 ms</strong></div>
+                <div className="flex justify-between"><span>Optimality Gap:</span><strong className="text-emerald-400">0.00%</strong></div>
+                <div className="flex justify-between"><span>Alternative Slot:</span><strong className="text-indigo-300">14:00 – 16:00</strong></div>
+              </div>
+            </div>
+
+            {/* Hard Constraints Enforced */}
+            <div className="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800 space-y-2">
+              <span className="font-bold text-emerald-300 uppercase text-[10px] block">Hard Domain Constraints Checked</span>
+              <div className="space-y-1 text-[11px] text-slate-300">
+                <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>Headway Separation (≥ 15 min buffer)</span></div>
+                <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>Spatial Machine Isolation (≥ 500m)</span></div>
+                <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>OHE Power Block Electrical Isolation</span></div>
+                <div className="flex items-center gap-1.5"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /><span>Crew Duty Limits (≤ 8h statutory limit)</span></div>
+              </div>
+            </div>
+
+            {/* Multi-Objective Function */}
+            <div className="bg-slate-950/60 p-3.5 rounded-lg border border-slate-800 space-y-2">
+              <span className="font-bold text-blue-300 uppercase text-[10px] block">Objective Weighting Formulation</span>
+              <div className="p-2 bg-slate-900 rounded font-mono text-[10px] text-blue-200 leading-relaxed border border-slate-800">
+                Min: 0.35·Downtime + 0.30·TrainDelay - 0.20·CriticalityScore - 0.15·ResourceSynergy
+              </div>
+              <p className="text-[10px] text-slate-400">
+                Guarantees zero cancellation of premium Vande Bharat / Rajdhani services while maximizing engineering throughput.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );

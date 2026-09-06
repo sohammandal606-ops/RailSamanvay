@@ -16,6 +16,8 @@ import { CorridorStatusPage } from './pages/CorridorStatusPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { ReportsPage } from './pages/ReportsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { DataIntegrationPage } from './pages/DataIntegrationPage';
+import { GeoSpatialResourcesPage } from './pages/GeoSpatialResourcesPage';
 
 export function App() {
   return (
@@ -30,11 +32,13 @@ export function App() {
           {/* Authenticated Internal Enterprise Console */}
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/integration" element={<DataIntegrationPage />} />
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/planner" element={<BlockPlannerPage />} />
             <Route path="/approval" element={<HumanApprovalPage />} />
             <Route path="/approval/:id" element={<ApprovalDetailPage />} />
             <Route path="/corridors" element={<CorridorStatusPage />} />
+            <Route path="/geospatial" element={<GeoSpatialResourcesPage />} />
             <Route path="/insights" element={<AiInsightsPage />} />
             <Route path="/weekly" element={<WeeklyPlannerPage />} />
             <Route path="/monthly" element={<MonthlyPlannerPage />} />

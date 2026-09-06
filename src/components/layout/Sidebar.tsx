@@ -16,7 +16,9 @@ import {
   LogOut,
   ShieldCheck,
   Zap,
-  Radio
+  Radio,
+  DatabaseZap,
+  MapPin
 } from 'lucide-react';
 import { useRailway } from '../../context/RailwayContext';
 import { Department } from '../../types';
@@ -43,11 +45,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
 
   const navItems = [
     { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
+    { to: '/integration', label: 'Data Integration', icon: DatabaseZap },
     { to: '/tasks', label: 'Maintenance Tasks', icon: Wrench, badge: criticalTasksCount > 0 ? criticalTasksCount : undefined, badgeVariant: 'critical' },
     { to: '/planner', label: 'Block Planner', icon: CalendarRange, highlight: true },
-    { to: '/approval', label: 'Approval Queue', icon: CheckSquare, badge: pendingApprovalsCount > 0 ? pendingApprovalsCount : undefined, badgeVariant: 'warning' },
+    { to: '/approval', label: 'Human Approval (HITL)', icon: CheckSquare, badge: pendingApprovalsCount > 0 ? pendingApprovalsCount : undefined, badgeVariant: 'warning' },
     { to: '/corridors', label: 'Corridor Status', icon: TrainTrack },
-    { to: '/insights', label: 'AI Insights & DBSCAN', icon: BrainCircuit },
+    { to: '/geospatial', label: 'Resources & Geo-Spatial', icon: MapPin },
+    { to: '/insights', label: 'AI Insights & Clustering', icon: BrainCircuit },
     { to: '/weekly', label: 'Weekly Plan', icon: Calendar },
     { to: '/monthly', label: 'Monthly Matrix', icon: Layers },
     { to: '/analytics', label: 'Analytics & KPIs', icon: BarChart3 },
@@ -185,9 +189,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onMobileClose })
                 <Radio className="w-3 h-3 text-emerald-400 animate-pulse" />
                 Live Data Feeds
               </span>
-              <span className="text-[10px] text-emerald-400 font-mono">4/4 SYNCED</span>
+              <span className="text-[10px] text-emerald-400 font-mono">5/5 SYNCED</span>
             </div>
-            <div className="grid grid-cols-4 gap-1 text-[9px] font-mono text-center">
+            <div className="grid grid-cols-5 gap-1 text-[9px] font-mono text-center">
+              <span className="bg-slate-800 text-emerald-300 rounded py-0.5">BDMS</span>
               <span className="bg-slate-800 text-sky-300 rounded py-0.5">TMS</span>
               <span className="bg-slate-800 text-amber-300 rounded py-0.5">SMMS</span>
               <span className="bg-slate-800 text-purple-300 rounded py-0.5">TDMS</span>

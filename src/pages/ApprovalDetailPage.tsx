@@ -124,6 +124,64 @@ export const ApprovalDetailPage: React.FC = () => {
         </div>
       </div>
 
+      {/* HITL Mandatory Regulatory Notice */}
+      <div className="bg-red-500/10 border-2 border-red-500/30 rounded-xl p-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-red-500/20 text-red-700 rounded-lg">
+            <ShieldCheck className="w-6 h-6 text-red-600" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-red-900 flex items-center gap-2">
+              <span>Human-In-The-Loop (HITL) Formal Authorization Protocol</span>
+              <span className="text-[10px] font-mono font-bold bg-red-600 text-white px-2 py-0.5 rounded uppercase">
+                Mandatory Safety Gate
+              </span>
+            </h4>
+            <p className="text-xs text-red-700 mt-0.5">
+              Automated system execution is strictly prohibited. AI recommendation engines (OR-Tools CP-SAT) generate conflict-free candidate slots; final authority rests exclusively with the Chief Section Controller.
+            </p>
+          </div>
+        </div>
+        <span className="text-[11px] font-mono font-bold text-red-800 bg-red-100 px-3 py-1 rounded-lg shrink-0 border border-red-200">
+          Engine: {plan.optimizationEngine || 'OR-Tools CP-SAT'}
+        </span>
+      </div>
+
+      {/* Alternative Block Window Suggestion (if available) */}
+      {(plan.alternativeBlockWindow || plan.id === 'BLK-2026-0912-004') && (
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+              <Zap className="w-5 h-5 text-indigo-600" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs font-bold text-indigo-950 uppercase tracking-wide">
+                  CP-SAT Alternative Recommended Window
+                </h4>
+                <span className="text-[10px] font-bold bg-indigo-200 text-indigo-800 px-1.5 py-0.5 rounded">
+                  0 Train Conflict Slot
+                </span>
+              </div>
+              <p className="text-xs text-indigo-800 mt-0.5">
+                Recommended Slot: <strong className="font-mono">14:00 – 16:00</strong> (Post-peak traffic window with zero Rajdhani/Freight headways and optimal crew availability).
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setStartTime('14:00');
+              setEndTime('16:00');
+              modifyBlockPlan(plan.id, { startTime: '14:00', endTime: '16:00', durationMin: 120 });
+              showToast('Switched to CP-SAT optimal window (14:00 - 16:00)', 'success');
+            }}
+            className="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shrink-0 transition-colors shadow-xs"
+          >
+            Apply 14:00 – 16:00 Window
+          </button>
+        </div>
+      )}
+
       {/* Edit Mode Panel (If activated) */}
       {isEditing && (
         <div className="bg-amber-50 border border-amber-300 rounded-xl p-4 animate-in slide-in-from-top duration-200">
@@ -175,6 +233,86 @@ export const ApprovalDetailPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Multi-Factor Operational Distinction Panel */}
+      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <div>
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <BrainCircuit className="w-4 h-4 text-purple-600" />
+              Multi-Factor Operational Matrix (Exact Formulas & Sub-Metric Decomposition)
+            </h3>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Explicit distinction across Safety Criticality, Demand Urgency, Asset Availability Impact, and Priority Score.
+            </p>
+          </div>
+          <span className="text-[10px] font-mono bg-purple-50 text-purple-700 border border-purple-200 px-2 py-1 rounded font-bold">
+            Task Evaluation: ENG-1042
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+          {/* 1. Safety Criticality */}
+          <div className="bg-rose-50/60 border border-rose-200 rounded-xl p-3.5 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-rose-950 uppercase tracking-wider text-[11px]">Safety Criticality</span>
+              <span className="font-mono font-extrabold text-base text-rose-700">92/100</span>
+            </div>
+            <p className="text-[10px] text-rose-800">Intrinsic structural failure risk & derailment potential</p>
+            <div className="space-y-1 pt-1 text-[11px] text-rose-900 font-mono">
+              <div className="flex justify-between"><span>Defect Severity (40%):</span><strong>30 pts</strong></div>
+              <div className="flex justify-between"><span>Track Class & Speed (30%):</span><strong>25 pts</strong></div>
+              <div className="flex justify-between"><span>Traffic Density GMT (20%):</span><strong>20 pts</strong></div>
+              <div className="flex justify-between"><span>Passenger Risk (10%):</span><strong>17 pts</strong></div>
+            </div>
+          </div>
+
+          {/* 2. Urgency Breakdown */}
+          <div className="bg-amber-50/60 border border-amber-200 rounded-xl p-3.5 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-amber-950 uppercase tracking-wider text-[11px]">Demand Urgency</span>
+              <span className="font-mono font-extrabold text-base text-amber-700">81/100</span>
+            </div>
+            <p className="text-[10px] text-amber-800">Time-sensitive escalation & statutory deadlines</p>
+            <div className="space-y-1 pt-1 text-[11px] text-amber-900 font-mono">
+              <div className="flex justify-between"><span>Days Since Detection (35%):</span><strong>30 pts</strong></div>
+              <div className="flex justify-between"><span>Regulatory Mandate (25%):</span><strong>20 pts</strong></div>
+              <div className="flex justify-between"><span>Speed Restriction (20%):</span><strong>16 pts</strong></div>
+              <div className="flex justify-between"><span>Weather / Seasonal (20%):</span><strong>15 pts</strong></div>
+            </div>
+          </div>
+
+          {/* 3. Availability Impact */}
+          <div className="bg-blue-50/60 border border-blue-200 rounded-xl p-3.5 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-blue-950 uppercase tracking-wider text-[11px]">Availability Impact</span>
+              <span className="font-mono font-extrabold text-base text-blue-700">78/100</span>
+            </div>
+            <p className="text-[10px] text-blue-800">Infrastructure availability & corridor throughput</p>
+            <div className="space-y-1 pt-1 text-[11px] text-blue-900 font-mono">
+              <div className="flex justify-between"><span>Line Availability:</span><strong>94% → 98%</strong></div>
+              <div className="flex justify-between"><span>Estimated Downtime:</span><strong>120 min</strong></div>
+              <div className="flex justify-between"><span>Speed Restriction:</span><strong>45 km/h</strong></div>
+              <div className="flex justify-between"><span>Throughput Gain:</span><strong>+4.2%</strong></div>
+            </div>
+          </div>
+
+          {/* 4. Priority Score */}
+          <div className="bg-emerald-50/60 border border-emerald-200 rounded-xl p-3.5 space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="font-bold text-emerald-950 uppercase tracking-wider text-[11px]">Priority Score</span>
+              <span className="font-mono font-extrabold text-base text-emerald-700">85/100</span>
+            </div>
+            <p className="text-[10px] text-emerald-800">Composite scheduling weight for CP-SAT solver</p>
+            <div className="space-y-1 pt-1 text-[11px] text-emerald-900 font-mono">
+              <div className="flex justify-between"><span>Formula:</span><strong>0.35C + 0.30U</strong></div>
+              <div className="flex justify-between"><span>Availability Factor:</span><strong>+ 0.20A</strong></div>
+              <div className="flex justify-between"><span>Resource Synergy:</span><strong>+ 0.15R</strong></div>
+              <div className="flex justify-between"><span>Solver Ranking:</span><strong className="text-emerald-800">Top 1st Priority</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Sections A to F in Structured Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

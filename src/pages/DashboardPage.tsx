@@ -20,7 +20,12 @@ import {
   Layers,
   BarChart3,
   Flame,
-  Radio
+  Radio,
+  RefreshCw,
+  Database,
+  Activity,
+  RotateCcw,
+  CheckSquare
 } from 'lucide-react';
 import {
   LineChart,
@@ -46,7 +51,12 @@ export const DashboardPage: React.FC = () => {
     runAiOptimization,
     isOptimizing,
     setSelectedTaskForDrawer,
-    setIsEmergencyModalOpen
+    setIsEmergencyModalOpen,
+    dynamicEvents,
+    triggerDynamicEvent,
+    executionRecords,
+    rejectedDecisions,
+    planFeedback
   } = useRailway();
 
   const navigate = useNavigate();
@@ -104,9 +114,12 @@ export const DashboardPage: React.FC = () => {
             <span className="text-xs font-mono font-bold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
               LIVE TELEMETRY
             </span>
+            <span className="text-xs font-mono font-bold bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full border border-purple-200">
+              5/5 SOURCES SYNCED
+            </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            AI-assisted multi-department maintenance & shadow block coordination • Eastern Railway Zone
+            AI-assisted multi-department maintenance & shadow block coordination • BDMS + TMS + SMMS + TDMS + COA
           </p>
         </div>
 
@@ -125,25 +138,73 @@ export const DashboardPage: React.FC = () => {
             className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98 shrink-0"
           >
             <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-            <span>{isOptimizing ? 'Optimizing...' : 'Run AI Optimization'}</span>
+            <span>{isOptimizing ? 'Optimizing (CP-SAT)...' : 'Run CP-SAT Optimization'}</span>
           </button>
         </div>
       </div>
 
-      {/* Top 6 KPI Cards (Section 3 Requirement) */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+      {/* Dynamic Re-Optimization Event Simulator Banner */}
+      <div className="bg-gradient-to-r from-amber-900/10 via-amber-800/5 to-transparent border border-amber-500/30 rounded-xl p-4 shadow-xs">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-amber-500/20 text-amber-600 rounded-lg shrink-0 mt-0.5">
+              <Radio className="w-5 h-5 animate-pulse" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wide">
+                  Dynamic Re-Optimization Engine (Event-Driven Reactive Scheduling)
+                </h4>
+                <span className="text-[10px] font-bold bg-amber-200 text-amber-900 px-1.5 py-0.2 rounded">
+                  Simulation Ready
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 mt-0.5">
+                Simulate sudden unscheduled disruptions (Track fractures, OHE line snaps, Severe train delays). Triggers CP-SAT re-planning automatically.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            {dynamicEvents.map((evt) => (
+              <button
+                key={evt.id}
+                onClick={() => triggerDynamicEvent(evt.id)}
+                className="px-3 py-1.5 rounded-lg border border-amber-300 bg-white hover:bg-amber-50 text-slate-800 text-xs font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
+                title={evt.description}
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                <span>Simulate: {evt.title.split(' ')[0]} ({evt.affectedSection})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 12 Key Performance Indicators (Comprehensive Operations Grid) */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
         <KPICard
           title="Total Tasks"
           value="1,248"
           badgeText="TMS+SMMS+TDMS"
           icon={Wrench}
-          trend={{ value: "+14", isNeutral: true, label: "new today" }}
+          trend={{ value: "+14", isNeutral: true, label: "today" }}
           variant="info"
           onClick={() => navigate('/tasks')}
         />
 
         <KPICard
-          title="Critical Tasks"
+          title="BDMS Block Demands"
+          value="240"
+          badgeText="Active Demands"
+          icon={Database}
+          trend={{ value: "Connected", isPositive: true, label: "BDMS" }}
+          variant="info"
+          onClick={() => navigate('/integration')}
+        />
+
+        <KPICard
+          title="Critical Defects"
           value="86"
           badgeText="Urgent"
           icon={AlertTriangle}
@@ -153,29 +214,19 @@ export const DashboardPage: React.FC = () => {
         />
 
         <KPICard
-          title="Available Blocks"
-          value="42"
-          badgeText="Windows"
+          title="Active Clusters"
+          value="4 Zones"
+          badgeText="DBSCAN + K-Means"
           icon={CalendarRange}
-          trend={{ value: "100%", isPositive: true, label: "cleared" }}
+          trend={{ value: "100%", isPositive: true, label: "coordinated" }}
           variant="default"
-          onClick={() => navigate('/planner')}
-        />
-
-        <KPICard
-          title="Assets at Risk"
-          value="27"
-          badgeText="Anomaly > 0.8"
-          icon={ShieldAlert}
-          trend={{ value: "-4", isPositive: true, label: "clustered" }}
-          variant="warning"
           onClick={() => navigate('/insights')}
         />
 
         <KPICard
           title="Asset Availability"
           value="94.7%"
-          badgeText="Mainline"
+          badgeText="Mainline SLA"
           icon={CheckCircle2}
           trend={{ value: "+3.2%", isPositive: true, label: "vs target" }}
           variant="success"
@@ -185,9 +236,69 @@ export const DashboardPage: React.FC = () => {
         <KPICard
           title="Block Utilization"
           value="87.3%"
-          badgeText="Shadowed"
+          badgeText="Shadow Blocked"
           icon={Gauge}
-          trend={{ value: "+26.3%", isPositive: true, label: "AI gain" }}
+          trend={{ value: "+26.3%", isPositive: true, label: "CP-SAT" }}
+          variant="success"
+          onClick={() => navigate('/analytics')}
+        />
+
+        <KPICard
+          title="Active Executions"
+          value={`${executionRecords.filter(r => r.executionStatus === 'Block In Progress').length} Blocks`}
+          badgeText="Track Telemetry"
+          icon={Activity}
+          trend={{ value: "Live", isPositive: true, label: "monitored" }}
+          variant="warning"
+          onClick={() => navigate('/approval')}
+        />
+
+        <KPICard
+          title="Re-Plan Queue"
+          value={`${rejectedDecisions.filter(d => d.replanStatus === 'Awaiting Re-Plan').length} Pending`}
+          badgeText="CP-SAT Queue"
+          icon={RotateCcw}
+          trend={{ value: "Re-evaluation", isNeutral: true, label: "ready" }}
+          variant="default"
+          onClick={() => navigate('/approval')}
+        />
+
+        <KPICard
+          title="HITL Clearance Gate"
+          value={`${pendingApprovals.length} Pending`}
+          badgeText="Strict HITL"
+          icon={CheckSquare}
+          trend={{ value: "Mandatory", isPositive: true, label: "human sign" }}
+          variant="info"
+          onClick={() => navigate('/approval')}
+        />
+
+        <KPICard
+          title="Punctuality Score"
+          value="99.8%"
+          badgeText="COA Feeds"
+          icon={ShieldAlert}
+          trend={{ value: "Zero Delay", isPositive: true, label: "priority trains" }}
+          variant="success"
+          onClick={() => navigate('/analytics')}
+        />
+
+        <KPICard
+          title="Feedback Loops"
+          value={`${planFeedback.length} Audited`}
+          badgeText="Continuous ML"
+          icon={RefreshCw}
+          trend={{ value: "Logged", isPositive: true, label: "post-block" }}
+          variant="default"
+          onClick={() => navigate('/approval')}
+        />
+
+        <KPICard
+          title="CO2 & Energy Saved"
+          value="42 MWh"
+          badgeText="Multi-Depts"
+          icon={TrendingUp}
+          trend={{ value: "-18%", isPositive: true, label: "engine idle" }}
           variant="success"
           onClick={() => navigate('/analytics')}
         />

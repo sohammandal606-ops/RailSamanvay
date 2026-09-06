@@ -88,6 +88,91 @@ export const AnalyticsPage: React.FC = () => {
         </button>
       </div>
 
+      {/* Simulation / Demo Data Notice */}
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-xs text-amber-900 font-medium">
+          <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+          <span><strong>Simulation / Demo Data:</strong> Optimization metrics and downtime analytics are evaluated on simulated Eastern Railway corridor telemetry (HWH-BWN-DGR-ASN).</span>
+        </div>
+      </div>
+
+      {/* Before vs After AI Comprehensive Comparison Card */}
+      <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-purple-600" />
+              Before vs After AI Optimization (Legacy Practice vs RailSamanvay CP-SAT Engine)
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Direct quantification of shadow block consolidation across track, signalling, and traction departments
+            </p>
+          </div>
+          <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-200">
+            Net Efficiency Gain: +43.5%
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Metric 1 */}
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <span className="text-xs font-bold text-slate-700 block">Total Corridor Block Windows</span>
+            <div className="flex items-baseline justify-between">
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-slate-500 uppercase font-mono block">Legacy (Siloed)</span>
+                <span className="text-lg font-bold text-slate-600 line-through">8 Blocks</span>
+              </div>
+              <ArrowDownRight className="w-5 h-5 text-emerald-600" />
+              <div className="text-right space-y-0.5">
+                <span className="text-[10px] text-emerald-700 uppercase font-mono block">RailSamanvay AI</span>
+                <span className="text-xl font-extrabold text-emerald-700 font-mono">5 Blocks</span>
+              </div>
+            </div>
+            <p className="text-[11px] text-emerald-700 font-medium pt-1 border-t border-slate-200">
+              3 fewer track possessions (-37.5% disruption)
+            </p>
+          </div>
+
+          {/* Metric 2 */}
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <span className="text-xs font-bold text-slate-700 block">Total Line Downtime Possession</span>
+            <div className="flex items-baseline justify-between">
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-slate-500 uppercase font-mono block">Legacy (Siloed)</span>
+                <span className="text-lg font-bold text-slate-600 line-through">540 Mins</span>
+              </div>
+              <ArrowDownRight className="w-5 h-5 text-emerald-600" />
+              <div className="text-right space-y-0.5">
+                <span className="text-[10px] text-emerald-700 uppercase font-mono block">RailSamanvay AI</span>
+                <span className="text-xl font-extrabold text-emerald-700 font-mono">360 Mins</span>
+              </div>
+            </div>
+            <p className="text-[11px] text-emerald-700 font-medium pt-1 border-t border-slate-200">
+              180 minutes saved weekly (-33.3% downtime)
+            </p>
+          </div>
+
+          {/* Metric 3 */}
+          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <span className="text-xs font-bold text-slate-700 block">Corridor Block Utilization Rate</span>
+            <div className="flex items-baseline justify-between">
+              <div className="space-y-0.5">
+                <span className="text-[10px] text-slate-500 uppercase font-mono block">Legacy (Siloed)</span>
+                <span className="text-lg font-bold text-slate-600">61.2%</span>
+              </div>
+              <ArrowUpRight className="w-5 h-5 text-blue-600" />
+              <div className="text-right space-y-0.5">
+                <span className="text-[10px] text-blue-700 uppercase font-mono block">RailSamanvay AI</span>
+                <span className="text-xl font-extrabold text-blue-700 font-mono">87.8%</span>
+              </div>
+            </div>
+            <p className="text-[11px] text-blue-700 font-medium pt-1 border-t border-slate-200">
+              +26.6% productivity increase inside blocks
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* 6 Top Analytics KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         <KPICard
@@ -214,7 +299,7 @@ export const AnalyticsPage: React.FC = () => {
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">Holistic improvement across safety, cross-department sync, and agility</p>
           </div>
-          <span className="text-[11px] font-mono text-slate-400">*Simulation / Demo Data for SIH 2026 Evaluation</span>
+          <span className="text-[11px] font-mono text-slate-400">*Simulation / Demo Data</span>
         </div>
 
         <div className="h-72 w-full">

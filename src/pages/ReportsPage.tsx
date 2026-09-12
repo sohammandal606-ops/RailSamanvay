@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRailway } from '../context/RailwayContext';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { GovEmblem } from '../components/common/GovEmblem';
+import { OfficialStamp } from '../components/common/OfficialStamp';
 import {
   FileText,
   Download,
@@ -12,37 +14,39 @@ import {
   CheckCircle2,
   FileSpreadsheet,
   Printer,
-  X
+  X,
+  Building2,
+  ShieldCheck
 } from 'lucide-react';
 
 export const ReportsPage: React.FC = () => {
-  const { showToast } = useRailway();
+  const { showToast, currentUser } = useRailway();
   const [selectedReport, setSelectedReport] = useState<string | null>(null);
 
   const reportTypes = [
     {
-      id: 'REP-WEEKLY',
-      title: 'Weekly Block Plan & Corridor Possession Schedule',
-      desc: 'Comprehensive multi-department timetable including track, signal and traction possessions.',
-      category: 'Operations',
+      id: 'REP-G48-WEEKLY',
+      title: 'Weekly Form G-48 Corridor Possession Master Plan',
+      desc: 'Comprehensive multi-department timetable including civil track, signal, and traction possessions.',
+      category: 'Operations (COA)',
       frequency: 'Weekly',
       lastGenerated: 'Today, 09:30 IST',
       format: 'PDF / CSV'
     },
     {
-      id: 'REP-MONTHLY',
-      title: 'Monthly Block Macro Forecast',
-      desc: 'Lookahead 30-day corridor utilization, major track renewal schedules and ballast tamping matrix.',
-      category: 'Planning',
+      id: 'REP-MONTHLY-MACRO',
+      title: 'Monthly Block Macro Forecast & Zonal Outlook',
+      desc: 'Lookahead 30-day corridor utilization, major track renewal schedules, and ballast tamping matrix.',
+      category: 'Planning & Renewal',
       frequency: 'Monthly',
       lastGenerated: '01 Sep 2026',
       format: 'PDF / CSV'
     },
     {
-      id: 'REP-PRIORITY',
-      title: 'Maintenance Priority & Anomaly Severity Report',
+      id: 'REP-TMS-PRIORITY',
+      title: 'Asset Defect Register & Anomaly Severity Report',
       desc: 'Ranked list of all critical assets, TMS ultrasonic test results, and Isolation Forest anomaly flags.',
-      category: 'Safety & Asset',
+      category: 'Safety & Track Assets',
       frequency: 'Daily',
       lastGenerated: 'Today, 08:00 IST',
       format: 'PDF / CSV'
@@ -51,25 +55,25 @@ export const ReportsPage: React.FC = () => {
       id: 'REP-AVAILABILITY',
       title: 'Asset Availability & Downtime Reduction Audit',
       desc: 'Corridor-wise infrastructure availability percentage against divisional target SLAs.',
-      category: 'Executive',
+      category: 'Executive (Railway Board)',
       frequency: 'Monthly',
       lastGenerated: '04 Sep 2026',
       format: 'PDF / CSV'
     },
     {
-      id: 'REP-DEPT',
-      title: 'Department-wise Coordination Performance',
-      desc: 'Cross-functional participation rate of Engineering, S&T and Traction in shared shadow blocks.',
-      category: 'Performance',
+      id: 'REP-BRANCH-SYNC',
+      title: 'Department-wise Coordination Performance (Shadow Factor)',
+      desc: 'Cross-functional participation rate of Engineering, S&T, and Traction in shared shadow blocks.',
+      category: 'Branch Coordination',
       frequency: 'Weekly',
       lastGenerated: 'Yesterday, 18:00 IST',
       format: 'PDF / CSV'
     },
     {
-      id: 'REP-AI-OPT',
-      title: 'AI Optimization & G&SR Safety Clearance Audit',
+      id: 'REP-GSR-AUDIT',
+      title: 'CP-SAT AI Optimization & G&SR Safety Clearance Dossier',
       desc: 'Complete mathematical formulation trace, DBSCAN density metrics, and safety rule validation logs.',
-      category: 'AI System Audit',
+      category: 'Statutory Safety Audit',
       frequency: 'On Demand',
       lastGenerated: 'Today, 09:15 IST',
       format: 'PDF / CSV'
@@ -78,20 +82,23 @@ export const ReportsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-              Reports & Executive Export Center
-            </h1>
-            <span className="text-xs font-mono font-bold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-              OFFICIAL IR DOCUMENTS
-            </span>
+      {/* Official Government Header */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <GovEmblem size="lg" variant="gold" className="shrink-0 mt-0.5" />
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Official Railway Reports & Statutory Export Center
+              </h1>
+              <span className="text-xs font-mono font-bold bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded border border-blue-300">
+                FORM G-48 DOSSIERS
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              भारतीय रेल आधिकारिक रिपोर्ट एवं निर्यात केंद्र • Generate, preview, and export official Indian Railways operational maintenance dossiers and block schedules
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Generate, preview and export official Indian Railways operational maintenance dossiers and block schedules
-          </p>
         </div>
       </div>
 
@@ -104,7 +111,7 @@ export const ReportsPage: React.FC = () => {
           >
             <div>
               <div className="flex items-start justify-between pb-3 border-b border-slate-100">
-                <span className="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">
+                <span className="text-xs font-mono font-bold bg-railway-navy text-white px-2 py-0.5 rounded">
                   {rep.id}
                 </span>
                 <span className="text-[10px] font-mono font-bold bg-blue-50 text-blue-800 px-2 py-0.5 rounded border border-blue-200">
@@ -120,7 +127,7 @@ export const ReportsPage: React.FC = () => {
               </p>
 
               <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 font-mono flex items-center justify-between">
-                <span>Category: {rep.category}</span>
+                <span>Branch: {rep.category}</span>
                 <span>{rep.lastGenerated}</span>
               </div>
             </div>
@@ -131,12 +138,12 @@ export const ReportsPage: React.FC = () => {
                 className="px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5 transition-colors"
               >
                 <Eye className="w-3.5 h-3.5 text-slate-500" />
-                <span>Preview</span>
+                <span>Preview G-48</span>
               </button>
 
               <div className="flex items-center gap-1.5">
                 <button
-                  onClick={() => showToast('CSV Exported', `${rep.title} downloaded as CSV format.`, 'success')}
+                  onClick={() => showToast('CSV Exported', `${rep.title} downloaded in CSV format.`, 'success')}
                   className="px-2.5 py-1.5 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1"
                 >
                   <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-600" />
@@ -144,8 +151,8 @@ export const ReportsPage: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => showToast('PDF Generated', `${rep.title} compiled with digital IR signature.`, 'success')}
-                  className="px-3 py-1.5 rounded-lg bg-railway-navy hover:bg-railway-slate text-white text-xs font-bold flex items-center gap-1 shadow-xs"
+                  onClick={() => showToast('PDF Generated', `${rep.title} compiled with digital IR signature token.`, 'success')}
+                  className="px-3 py-1.5 rounded-lg bg-railway-navy hover:bg-railway-slate text-white text-xs font-bold flex items-center gap-1 shadow-xs border border-slate-800"
                 >
                   <Download className="w-3.5 h-3.5 text-amber-400" />
                   <span>PDF</span>
@@ -165,7 +172,7 @@ export const ReportsPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <FileText className="w-5 h-5 text-amber-400" />
                 <h3 className="text-sm font-bold truncate max-w-lg">
-                  Report Preview: {selectedReport}
+                  Official Dossier Preview: {selectedReport}
                 </h3>
               </div>
               <button
@@ -177,46 +184,55 @@ export const ReportsPage: React.FC = () => {
             </div>
 
             {/* Document Mock Preview */}
-            <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto bg-slate-50 font-serif text-slate-900">
-              <div className="bg-white p-8 border border-slate-300 rounded shadow-xs space-y-6">
+            <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto bg-slate-50 text-slate-900">
+              <div className="bg-white p-8 border border-slate-300 rounded-lg shadow-xs space-y-6">
                 
-                {/* Letterhead */}
+                {/* Official Letterhead */}
                 <div className="text-center border-b-2 border-slate-800 pb-4">
-                  <div className="font-bold text-xs uppercase tracking-widest text-slate-600 font-sans">
-                    GOVERNMENT OF INDIA • MINISTRY OF RAILWAYS
+                  <div className="flex justify-center mb-2">
+                    <GovEmblem size="lg" variant="navy" />
                   </div>
-                  <h2 className="text-lg font-bold uppercase tracking-tight text-slate-900 font-sans mt-1">
-                    Eastern Railway • Operating & Maintenance Control Office
+                  <div className="font-bold text-xs uppercase tracking-widest text-slate-700">
+                    भारत सरकार • रेल मंत्रालय | GOVERNMENT OF INDIA • MINISTRY OF RAILWAYS
+                  </div>
+                  <h2 className="text-lg font-bold uppercase tracking-tight text-slate-900 mt-1">
+                    {currentUser.zone || 'Eastern Railway'} • Operating & Maintenance Control Office
                   </h2>
-                  <div className="text-xs text-slate-500 font-sans mt-0.5">
-                    Howrah Divisional Headquarters • Block Planning & Safety Section
+                  <div className="text-xs text-slate-500 mt-0.5">
+                    Divisional Headquarters • Block Planning & Safety Section • Form G-48
                   </div>
                 </div>
 
-                {/* Report Title */}
+                {/* Report Title & Official Stamp */}
                 <div className="flex justify-between items-center text-xs font-mono text-slate-600 border-b border-slate-200 pb-2">
-                  <span>REF: ER/HWH/OPT-AI/2026/09/12</span>
+                  <span>REF: IR/OPT-AI/G48/2026/09</span>
                   <span>DATE: 12-SEP-2026</span>
+                  <OfficialStamp
+                    status="Approved"
+                    officerTitle="SR. DIVISIONAL OPERATIONS MANAGER"
+                    sanctionRef="G48-2026-09"
+                    size="sm"
+                  />
                 </div>
 
                 <div>
-                  <h3 className="text-base font-bold underline font-sans mb-2">
-                    Subject: Formal Authorization Schedule for Coordinated Shadow Block Possession
+                  <h3 className="text-base font-bold underline mb-2">
+                    Subject: Formal Line Clear Authorization Schedule for Coordinated Shadow Block Possession
                   </h3>
                   <p className="text-xs leading-relaxed text-slate-700">
-                    In reference to the multi-source telemetry integrated from TMS (Track), SMMS (Signalling), and TDMS (Traction), the following coordinated maintenance blocks have passed automated G&SR Chapter IV rule validation and received algorithmic clearance:
+                    In reference to the multi-source telemetry integrated from TMS (Permanent Way), SMMS (Signalling), and TDMS (Traction Distribution), the following coordinated maintenance blocks have passed automated G&SR Chapter IV rule validation and received formal operational clearance:
                   </p>
                 </div>
 
                 {/* Table Mock */}
-                <table className="w-full text-left text-xs border border-slate-300 font-sans">
+                <table className="w-full text-left text-xs border border-slate-300">
                   <thead className="bg-slate-100 font-bold border-b border-slate-300">
                     <tr>
-                      <th className="p-2 border-r border-slate-300">Block ID</th>
+                      <th className="p-2 border-r border-slate-300">Form G-48 ID</th>
                       <th className="p-2 border-r border-slate-300">Corridor Section</th>
-                      <th className="p-2 border-r border-slate-300">Time Window</th>
-                      <th className="p-2 border-r border-slate-300">Departments</th>
-                      <th className="p-2">Safety Clearance</th>
+                      <th className="p-2 border-r border-slate-300">Time Window (IST)</th>
+                      <th className="p-2 border-r border-slate-300">Branches</th>
+                      <th className="p-2">G&SR Clearance</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-300 font-mono text-[11px]">
@@ -238,14 +254,14 @@ export const ReportsPage: React.FC = () => {
                 </table>
 
                 {/* Sign-off */}
-                <div className="pt-6 flex justify-between items-end text-xs font-sans text-slate-700">
+                <div className="pt-6 flex justify-between items-end text-xs text-slate-700 border-t border-slate-200">
                   <div>
                     <div className="font-mono text-[10px] text-slate-500">DIGITALLY GENERATED BY:</div>
-                    <div className="font-bold">RailSamanvay AI Optimization Engine v2.4</div>
+                    <div className="font-bold">RailSamanvay AI Engine • CRIS New Delhi</div>
                   </div>
                   <div className="text-right">
-                    <div className="font-bold">Chief Block Controller (Operating)</div>
-                    <div className="text-slate-500 text-[11px]">Howrah Division • Eastern Railway</div>
+                    <div className="font-bold">Senior Divisional Operations Manager (Sr. DOM)</div>
+                    <div className="text-slate-500 text-[11px]">{currentUser.zone || 'Eastern Railway'}</div>
                   </div>
                 </div>
 
@@ -255,12 +271,12 @@ export const ReportsPage: React.FC = () => {
             {/* Modal Footer */}
             <div className="p-4 bg-slate-100 border-t border-slate-200 flex items-center justify-between">
               <span className="text-xs text-slate-500 font-mono">
-                *Official Document Simulation for SIH 2026
+                *Official Document Simulation for Indian Railways (SIH 2026)
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setSelectedReport(null)}
-                  className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
+                  className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50"
                 >
                   Close Preview
                 </button>
@@ -269,10 +285,10 @@ export const ReportsPage: React.FC = () => {
                     showToast('Document Printed', 'Exported to local printer queue.', 'success');
                     setSelectedReport(null);
                   }}
-                  className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-md flex items-center gap-1.5"
+                  className="px-4 py-2 text-xs font-bold text-white bg-railway-navy hover:bg-railway-slate rounded-lg flex items-center gap-1.5 shadow-xs"
                 >
-                  <Printer className="w-3.5 h-3.5" />
-                  <span>Print Dossier</span>
+                  <Printer className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Print Formal Dossier</span>
                 </button>
               </div>
             </div>

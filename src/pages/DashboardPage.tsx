@@ -3,6 +3,7 @@ import { useRailway } from '../context/RailwayContext';
 import { KPICard } from '../components/common/KPICard';
 import { CorridorVisualizer } from '../components/common/CorridorVisualizer';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { GovEmblem } from '../components/common/GovEmblem';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Wrench,
@@ -25,7 +26,10 @@ import {
   Database,
   Activity,
   RotateCcw,
-  CheckSquare
+  CheckSquare,
+  ShieldCheck,
+  Building2,
+  FileCheck
 } from 'lucide-react';
 import {
   LineChart,
@@ -56,7 +60,8 @@ export const DashboardPage: React.FC = () => {
     triggerDynamicEvent,
     executionRecords,
     rejectedDecisions,
-    planFeedback
+    planFeedback,
+    currentUser
   } = useRailway();
 
   const navigate = useNavigate();
@@ -88,13 +93,6 @@ export const DashboardPage: React.FC = () => {
     { name: 'Traction (OHE)', TDMS_Traction: 328, Integrated: 280 },
   ];
 
-  const weeklyUtilizationData = [
-    { week: 'Wk 1', separatePlan: 58, aiOptimized: 84 },
-    { week: 'Wk 2', separatePlan: 62, aiOptimized: 86 },
-    { week: 'Wk 3', separatePlan: 59, aiOptimized: 89 },
-    { week: 'Wk 4', separatePlan: 61, aiOptimized: 91 },
-  ];
-
   const downtimeComparisonData = [
     { corridor: 'HWH-BWN', beforeAI: 160, afterAI: 110 },
     { corridor: 'BWN-DGR', beforeAI: 190, afterAI: 120 },
@@ -104,63 +102,67 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Operations Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-              Railway Operations Overview
-            </h1>
-            <span className="text-xs font-mono font-bold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-              LIVE TELEMETRY
-            </span>
-            <span className="text-xs font-mono font-bold bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full border border-purple-200">
-              5/5 SOURCES SYNCED
-            </span>
+      {/* Official Government Operations Command Header */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <GovEmblem size="lg" variant="gold" className="shrink-0 mt-0.5" />
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Central Operations Command Room
+              </h1>
+              <span className="text-[10px] font-mono font-bold bg-blue-100 text-blue-900 px-2 py-0.5 rounded border border-blue-300">
+                COA INTEGRATED
+              </span>
+              <span className="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded border border-emerald-300 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                5/5 FEEDS SYNCED
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              भारतीय रेल परिचालन नियंत्रण कक्ष • {currentUser.zone || 'Eastern Railway (ER) / Howrah Div'} • Sector: HWH – BWN – ASN
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            AI-assisted multi-department maintenance & shadow block coordination • BDMS + TMS + SMMS + TDMS + COA
-          </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
           <button
             onClick={() => setIsEmergencyModalOpen(true)}
-            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98 shrink-0"
+            className="flex-1 lg:flex-initial px-3.5 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all border border-red-800 active:scale-98 shrink-0"
           >
-            <Flame className="w-4 h-4" />
-            <span>Emergency Request</span>
+            <Flame className="w-4 h-4 text-amber-300" />
+            <span>Emergency Block Request</span>
           </button>
 
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98 shrink-0"
+            className="flex-1 lg:flex-initial px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all border border-slate-800 disabled:opacity-50 active:scale-98 shrink-0"
           >
             <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-            <span>{isOptimizing ? 'Optimizing (CP-SAT)...' : 'Run CP-SAT Optimization'}</span>
+            <span>{isOptimizing ? 'Running CP-SAT Engine...' : 'Run CP-SAT Optimizer'}</span>
           </button>
         </div>
       </div>
 
-      {/* Dynamic Re-Optimization Event Simulator Banner */}
-      <div className="bg-gradient-to-r from-amber-900/10 via-amber-800/5 to-transparent border border-amber-500/30 rounded-xl p-4 shadow-xs">
+      {/* Dynamic Re-Optimization Incident Simulator */}
+      <div className="bg-amber-500/10 border border-amber-400/40 rounded-xl p-4 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-amber-500/20 text-amber-600 rounded-lg shrink-0 mt-0.5">
+            <div className="p-2 bg-amber-500/20 text-amber-700 rounded-lg shrink-0 mt-0.5">
               <Radio className="w-5 h-5 animate-pulse" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wide">
-                  Dynamic Re-Optimization Engine (Event-Driven Reactive Scheduling)
+                  Indian Railways Incident & Disruption Simulator (Automated Reactive Re-Plan)
                 </h4>
                 <span className="text-[10px] font-bold bg-amber-200 text-amber-900 px-1.5 py-0.2 rounded">
-                  Simulation Ready
+                  G&SR RULE 1968
                 </span>
               </div>
               <p className="text-xs text-slate-600 mt-0.5">
-                Simulate sudden unscheduled disruptions (Track fractures, OHE line snaps, Severe train delays). Triggers CP-SAT re-planning automatically.
+                Simulate unexpected track fractures, OHE line drops, or sudden train delays to trigger instant OR-Tools CP-SAT re-scheduling.
               </p>
             </div>
           </div>
@@ -244,7 +246,7 @@ export const DashboardPage: React.FC = () => {
         />
 
         <KPICard
-          title="Active Executions"
+          title="Active Possessions"
           value={`${executionRecords.filter(r => r.executionStatus === 'Block In Progress').length} Blocks`}
           badgeText="Track Telemetry"
           icon={Activity}
@@ -284,7 +286,7 @@ export const DashboardPage: React.FC = () => {
         />
 
         <KPICard
-          title="Feedback Loops"
+          title="Audit Feedback"
           value={`${planFeedback.length} Audited`}
           badgeText="Continuous ML"
           icon={RefreshCw}
@@ -304,30 +306,41 @@ export const DashboardPage: React.FC = () => {
         />
       </div>
 
-      {/* Corridor Section Status Visualizer (Section 5 Requirement) */}
-      <CorridorVisualizer
-        corridors={corridors}
-        onSelectSection={(sec) => {
-          // Corridor selection triggers modal in component
-        }}
-      />
+      {/* Corridor Section Status Visualizer */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-xs">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <TrainTrack className="w-5 h-5 text-blue-700" />
+            <h2 className="text-sm font-bold text-slate-900">
+              Live Corridor Track Availability & Signaling State
+            </h2>
+          </div>
+          <span className="text-[10px] font-mono text-slate-500">
+            HOWRAH – BARDDHAMAN – ASANSOL 3RD & 4TH LINES
+          </span>
+        </div>
+        <CorridorVisualizer
+          corridors={corridors}
+          onSelectSection={() => {}}
+        />
+      </div>
 
-      {/* Visualizations Charts Grid (Section 4 Requirement) */}
+      {/* Visualizations Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Chart 1: Asset Availability Trend (30 Days Line Chart) */}
-        <div className="lg:col-span-2 bg-white rounded-lg border border-slate-200 p-5 shadow-xs">
+        {/* Chart 1: Asset Availability Trend */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-blue-600" />
-                Asset Availability Trend (30-Day Moving Window)
+                <TrendingUp className="w-4 h-4 text-blue-700" />
+                Asset Availability Trend (30-Day Moving SLA Window)
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Target vs Actual Infrastructure Availability across Eastern Railway Mainline
+                Target (95%) vs Actual Infrastructure Availability across Eastern Railway Mainline
               </p>
             </div>
-            <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+            <span className="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded border border-emerald-300">
               Current: 95.2%
             </span>
           </div>
@@ -339,23 +352,23 @@ export const DashboardPage: React.FC = () => {
                 <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#64748B' }} />
                 <YAxis domain={[85, 100]} tick={{ fontSize: 11, fill: '#64748B' }} unit="%" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0B192C', borderRadius: '8px', color: '#fff', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#071A2E', borderRadius: '8px', color: '#fff', fontSize: '11px', border: '1px solid #1E3E62' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '10px' }} />
                 <Line
                   type="monotone"
                   dataKey="availability"
                   name="Actual Availability (%)"
-                  stroke="#2563EB"
+                  stroke="#1E40AF"
                   strokeWidth={3}
-                  dot={{ r: 4, fill: '#2563EB' }}
+                  dot={{ r: 4, fill: '#1E40AF' }}
                   activeDot={{ r: 6 }}
                 />
                 <Line
                   type="monotone"
                   dataKey="target"
                   name="Target SLA (95%)"
-                  stroke="#10B981"
+                  stroke="#059669"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   dot={false}
@@ -365,15 +378,15 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Chart 2: Maintenance Priority Distribution (Donut Chart) */}
-        <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-xs">
+        {/* Chart 2: Maintenance Priority Distribution */}
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-amber-600" />
-                Task Priority Distribution
+                Task Priority Classification
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">Active tasks classified by AI severity</p>
+              <p className="text-xs text-slate-500 mt-0.5">Asset defects classified by safety criticality</p>
             </div>
           </div>
 
@@ -394,7 +407,7 @@ export const DashboardPage: React.FC = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0B192C', borderRadius: '8px', color: '#fff', fontSize: '11px' }}
+                  contentStyle={{ backgroundColor: '#071A2E', borderRadius: '8px', color: '#fff', fontSize: '11px' }}
                 />
                 <Legend wrapperStyle={{ fontSize: '10px', paddingTop: '5px' }} />
               </PieChart>
@@ -402,10 +415,10 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-center text-xs">
-            <div className="bg-red-50 p-1.5 rounded text-red-800 font-mono font-bold">
-              86 Critical (Due &lt;24h)
+            <div className="bg-red-50 p-1.5 rounded text-red-800 font-mono font-bold border border-red-200">
+              86 Critical (&lt;24h)
             </div>
-            <div className="bg-amber-50 p-1.5 rounded text-amber-800 font-mono font-bold">
+            <div className="bg-amber-50 p-1.5 rounded text-amber-800 font-mono font-bold border border-amber-200">
               242 High Priority
             </div>
           </div>
@@ -416,14 +429,14 @@ export const DashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Chart 3: Department-wise Maintenance */}
-        <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-xs">
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-purple-600" />
-                Department Coordination
+                <Layers className="w-4 h-4 text-purple-700" />
+                Multi-Branch Block Coordination
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">Total vs Integrated Shadow Block Tasks</p>
+              <p className="text-xs text-slate-500 mt-0.5">Isolated Requests vs Coordinated Shadow Blocks</p>
             </div>
           </div>
 
@@ -433,24 +446,24 @@ export const DashboardPage: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                 <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748B' }} />
                 <YAxis tick={{ fontSize: 10, fill: '#64748B' }} />
-                <Tooltip contentStyle={{ backgroundColor: '#0B192C', borderRadius: '8px', color: '#fff', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#071A2E', borderRadius: '8px', color: '#fff', fontSize: '11px' }} />
                 <Legend wrapperStyle={{ fontSize: '10px' }} />
-                <Bar dataKey="TMS_Track" name="Separate Req" fill="#94A3B8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="TMS_Track" name="Individual Req" fill="#94A3B8" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Integrated" name="AI Coordinated" fill="#1E40AF" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        {/* Chart 5: Downtime Reduction (Before vs After AI) */}
-        <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-xs">
+        {/* Chart 4: Downtime Reduction */}
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Clock className="w-4 h-4 text-emerald-600" />
+                <Clock className="w-4 h-4 text-emerald-700" />
                 Downtime Reduction (Minutes)
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">Corridor Shutdown Time: Before vs After AI</p>
+              <p className="text-xs text-slate-500 mt-0.5">Line Block Possession Duration: Before vs After AI</p>
             </div>
           </div>
 
@@ -460,25 +473,25 @@ export const DashboardPage: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
                 <XAxis dataKey="corridor" tick={{ fontSize: 10, fill: '#64748B' }} />
                 <YAxis tick={{ fontSize: 10, fill: '#64748B' }} unit="m" />
-                <Tooltip contentStyle={{ backgroundColor: '#0B192C', borderRadius: '8px', color: '#fff', fontSize: '11px' }} />
+                <Tooltip contentStyle={{ backgroundColor: '#071A2E', borderRadius: '8px', color: '#fff', fontSize: '11px' }} />
                 <Legend wrapperStyle={{ fontSize: '10px' }} />
-                <Bar dataKey="beforeAI" name="Before AI (mins)" fill="#F87171" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="afterAI" name="After AI (mins)" fill="#10B981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="beforeAI" name="Legacy Plan (mins)" fill="#F87171" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="afterAI" name="AI Optimized (mins)" fill="#059669" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Priority Approval Queue & Action Feed */}
-        <div className="bg-white rounded-lg border border-slate-200 p-5 shadow-xs flex flex-col justify-between">
+        <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3 pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                <h3 className="text-sm font-bold text-slate-900">Awaiting Human Approval</h3>
+                <FileCheck className="w-4 h-4 text-amber-600" />
+                <h3 className="text-sm font-bold text-slate-900">Pending Form G-48 Sanctions</h3>
               </div>
-              <span className="text-xs font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded">
-                {pendingApprovals.length} Plans
+              <span className="text-xs font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300">
+                {pendingApprovals.length} Awaiting Sanction
               </span>
             </div>
 
@@ -487,16 +500,16 @@ export const DashboardPage: React.FC = () => {
                 <div
                   key={plan.id}
                   onClick={() => navigate(`/approval/${plan.id}`)}
-                  className="p-3 rounded-lg border border-slate-200 hover:border-blue-400 hover:bg-blue-50/30 cursor-pointer transition-all"
+                  className="p-3 rounded-lg border border-slate-200 hover:border-blue-400 hover:bg-blue-50/40 cursor-pointer transition-all"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-blue-700">{plan.id}</span>
+                    <span className="font-mono text-xs font-bold text-blue-800">{plan.id}</span>
                     <span className="text-[10px] font-mono text-slate-500">{plan.date}</span>
                   </div>
-                  <p className="text-xs font-semibold text-slate-800 mt-1 truncate">{plan.corridor}</p>
+                  <p className="text-xs font-bold text-slate-800 mt-1 truncate">{plan.corridor}</p>
                   <div className="mt-2 flex items-center justify-between text-xs text-slate-500">
                     <span className="font-mono">{plan.startTime} – {plan.endTime} ({plan.durationMin}m)</span>
-                    <span className="font-bold text-emerald-600 font-mono">{plan.blockUtilization}% Util</span>
+                    <span className="font-bold text-emerald-700 font-mono">{plan.blockUtilization}% Util</span>
                   </div>
                 </div>
               ))}
@@ -506,9 +519,9 @@ export const DashboardPage: React.FC = () => {
           <div className="mt-4 pt-3 border-t border-slate-100">
             <Link
               to="/approval"
-              className="w-full py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-md text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full py-2 px-3 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
             >
-              <span>Open Complete Approval Queue</span>
+              <span>Open Sanction Desk (Sr. DOM)</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

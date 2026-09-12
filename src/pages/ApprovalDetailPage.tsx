@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useRailway } from '../context/RailwayContext';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { GovEmblem } from '../components/common/GovEmblem';
+import { OfficialStamp } from '../components/common/OfficialStamp';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -18,7 +20,9 @@ import {
   Zap,
   Radio,
   Layers,
-  Check
+  Check,
+  Printer,
+  FileText
 } from 'lucide-react';
 
 export const ApprovalDetailPage: React.FC = () => {
@@ -36,7 +40,7 @@ export const ApprovalDetailPage: React.FC = () => {
   if (!plan) {
     return (
       <div className="p-8 text-center text-slate-600">
-        <p>Block plan not found.</p>
+        <p>Block requisition plan not found.</p>
         <Link to="/approval" className="text-blue-600 underline text-xs mt-2 block">
           Back to Approval Queue
         </Link>
@@ -57,33 +61,51 @@ export const ApprovalDetailPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Top Breadcrumb & Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      {/* Official Government Form G-48 Header */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate('/approval')}
-            className="p-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-600 transition-colors"
+            className="p-2 rounded-lg border border-slate-300 hover:bg-slate-100 text-slate-700 transition-colors"
+            title="Back to Sanctions Queue"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
+          <GovEmblem size="md" variant="gold" />
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-mono font-bold bg-railway-navy text-white px-2.5 py-0.5 rounded">
-                {plan.id}
+                FORM G-48: {plan.id}
               </span>
-              <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                Plan Verification & Formal Clearance
+              <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                Official Block Sanction & Line Clear Clearance Dossier
               </h1>
               <StatusBadge status={plan.status} variant="approvalStatus" size="sm" />
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Corridor: {plan.corridor} • Date: {plan.date}
+              Corridor Sector: {plan.corridor} • Date of Possession: {plan.date} • G&SR Rule 1968 Compliant
             </p>
           </div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        {/* Action Buttons & Stamp */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <OfficialStamp
+            status={plan.status as any}
+            officerTitle="SR. DIVISIONAL OPERATIONS MANAGER"
+            sanctionRef={plan.id}
+            size="sm"
+          />
+
+          <button
+            onClick={() => window.print()}
+            className="px-3 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5"
+            title="Print Official Form G-48"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Print G-48</span>
+          </button>
+
           {plan.status === 'Pending Approval' ? (
             <>
               <button
@@ -91,7 +113,7 @@ export const ApprovalDetailPage: React.FC = () => {
                 className="px-3.5 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1.5"
               >
                 <Edit3 className="w-4 h-4" />
-                <span>{isEditing ? 'Cancel Edit' : 'Modify Slot'}</span>
+                <span>{isEditing ? 'Cancel Edit' : 'Adjust Slot'}</span>
               </button>
 
               <button
@@ -102,7 +124,7 @@ export const ApprovalDetailPage: React.FC = () => {
                 className="px-3.5 py-2 rounded-lg border border-red-300 bg-red-50 text-red-700 hover:bg-red-100 text-xs font-bold flex items-center gap-1.5"
               >
                 <XCircle className="w-4 h-4" />
-                <span>Reject Plan</span>
+                <span>Reject</span>
               </button>
 
               <button
@@ -112,7 +134,7 @@ export const ApprovalDetailPage: React.FC = () => {
                 className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
               >
                 <Check className="w-4 h-4" />
-                <span>Authorize Block Clearance</span>
+                <span>Authorize Block Clearance (DSC Sign)</span>
               </button>
             </>
           ) : (
@@ -127,7 +149,7 @@ export const ApprovalDetailPage: React.FC = () => {
       {/* HITL Mandatory Regulatory Notice */}
       <div className="bg-red-500/10 border-2 border-red-500/30 rounded-xl p-4 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-red-500/20 text-red-700 rounded-lg">
+          <div className="p-2 bg-red-500/20 text-red-700 rounded-lg shrink-0">
             <ShieldCheck className="w-6 h-6 text-red-600" />
           </div>
           <div>
@@ -138,20 +160,20 @@ export const ApprovalDetailPage: React.FC = () => {
               </span>
             </h4>
             <p className="text-xs text-red-700 mt-0.5">
-              Automated system execution is strictly prohibited. AI recommendation engines (OR-Tools CP-SAT) generate conflict-free candidate slots; final authority rests exclusively with the Chief Section Controller.
+              Automated execution without officer sign-off is strictly prohibited. AI recommendation engines (OR-Tools CP-SAT) generate conflict-free candidate slots; final possession authority rests exclusively with the Chief Section Controller.
             </p>
           </div>
         </div>
-        <span className="text-[11px] font-mono font-bold text-red-800 bg-red-100 px-3 py-1 rounded-lg shrink-0 border border-red-200">
+        <span className="text-[11px] font-mono font-bold text-red-800 bg-red-100 px-3 py-1 rounded-lg shrink-0 border border-red-200 hidden md:block">
           Engine: {plan.optimizationEngine || 'OR-Tools CP-SAT'}
         </span>
       </div>
 
-      {/* Alternative Block Window Suggestion (if available) */}
+      {/* Alternative Block Window Suggestion */}
       {(plan.alternativeBlockWindow || plan.id === 'BLK-2026-0912-004') && (
         <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg shrink-0">
               <Zap className="w-5 h-5 text-indigo-600" />
             </div>
             <div>
@@ -182,7 +204,7 @@ export const ApprovalDetailPage: React.FC = () => {
         </div>
       )}
 
-      {/* Edit Mode Panel (If activated) */}
+      {/* Edit Mode Panel */}
       {isEditing && (
         <div className="bg-amber-50 border border-amber-300 rounded-xl p-4 animate-in slide-in-from-top duration-200">
           <h3 className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2">
@@ -323,8 +345,8 @@ export const ApprovalDetailPage: React.FC = () => {
           {/* SECTION A: Block Information */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">A</span>
-              Block Information & Corridor Telemetry
+              <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">A</span>
+              Form G-48 Block Information & Corridor Section
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
@@ -337,19 +359,19 @@ export const ApprovalDetailPage: React.FC = () => {
                 <span className="font-bold text-slate-900 text-xs mt-1 block">{plan.corridor}</span>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-500 block">Scheduled Slot & Duration</span>
+                <span className="text-slate-500 block">Possession Slot & Duration</span>
                 <span className="font-mono font-bold text-blue-700 text-xs mt-1 block">
                   {plan.startTime} – {plan.endTime} ({plan.durationMin} Mins)
                 </span>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-500 block">Block Type</span>
+                <span className="text-slate-500 block">Block Classification</span>
                 <span className="font-bold text-purple-800 text-xs mt-1 block">
-                  Integrated Multi-Department Shadow Block
+                  Synchronized Multi-Department Shadow Block
                 </span>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-500 block">Participating Depts</span>
+                <span className="text-slate-500 block">Participating Branches</span>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {plan.departments.map(d => (
                     <StatusBadge key={d} status={d} variant="department" size="sm" />
@@ -357,7 +379,7 @@ export const ApprovalDetailPage: React.FC = () => {
                 </div>
               </div>
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-500 block">Safety Protocol</span>
+                <span className="text-slate-500 block">Operating Safety Protocol</span>
                 <span className="font-mono font-bold text-emerald-700 text-xs mt-1 block">
                   G&SR Rule 4.09 Compliant
                 </span>
@@ -369,8 +391,8 @@ export const ApprovalDetailPage: React.FC = () => {
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center justify-between">
               <span className="flex items-center gap-1.5">
-                <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">B</span>
-                Coordinated Maintenance Activities ({linkedTasks.length} Tasks)
+                <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">B</span>
+                Coordinated Maintenance Activities ({linkedTasks.length} Requisitions)
               </span>
               <span className="text-slate-500 text-[11px] font-normal">TMS / SMMS / TDMS</span>
             </h3>
@@ -400,8 +422,8 @@ export const ApprovalDetailPage: React.FC = () => {
           {/* SECTION C: Train Conflicts & Mitigations */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">C</span>
-              Train Timetable Interaction & Mitigation Analysis (COA)
+              <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">C</span>
+              Train Timetable Interaction & Caution Order Analysis (COA)
             </h3>
 
             <div className="space-y-2.5 text-xs">
@@ -414,11 +436,11 @@ export const ApprovalDetailPage: React.FC = () => {
                       <span className="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded text-slate-700">{tc.trainType}</span>
                     </div>
                     <p className="text-[11px] text-slate-600 mt-1">
-                      Scheduled Window: <span className="font-mono font-semibold">{tc.scheduledTime}</span>
+                      Scheduled Slot: <span className="font-mono font-semibold">{tc.scheduledTime}</span>
                     </p>
                   </div>
                   <div className="sm:text-right">
-                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
+                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-200">
                       Mitigation: {tc.mitigationAction}
                     </span>
                   </div>
@@ -435,8 +457,8 @@ export const ApprovalDetailPage: React.FC = () => {
           {/* SECTION D: Railway Rule Validation Checklist */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">D</span>
-              Railway Domain Rule Engine Validation
+              <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">D</span>
+              Railway Operating Code Validation Checklist
             </h3>
 
             <div className="space-y-2.5 text-xs">
@@ -457,8 +479,8 @@ export const ApprovalDetailPage: React.FC = () => {
           {/* SECTION E: AI Optimization Score */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">E</span>
-              AI Efficiency & Asset Impact
+              <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">E</span>
+              CP-SAT Asset Impact & Operating Metrics
             </h3>
 
             <div className="space-y-3 text-xs">
@@ -484,11 +506,11 @@ export const ApprovalDetailPage: React.FC = () => {
           {/* SECTION F: Approval & Audit History */}
           <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs">
             <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <span className="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">F</span>
-              Approval & Audit Trail
+              <span className="w-5 h-5 rounded-full bg-railway-navy text-white flex items-center justify-center text-[10px]">F</span>
+              Official Audit Trail & Digital Signature Record
             </h3>
 
-            <div className="space-y-3 text-xs border-l-2 border-blue-500 pl-3 ml-1">
+            <div className="space-y-3 text-xs border-l-2 border-blue-600 pl-3 ml-1">
               {plan.history.map((h, idx) => (
                 <div key={idx} className="relative">
                   <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono">

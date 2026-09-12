@@ -18,14 +18,25 @@ export default {
       },
       colors: {
         railway: {
-          darkest: '#07111E',
-          navy: '#0B192C',
-          slate: '#1E3E62',
-          subtle: '#27445D',
+          darkest: '#050E1A',
+          navy: '#071A2E',
+          'navy-dark': '#040F1D',
+          slate: '#132F4C',
+          subtle: '#1E3E62',
           border: '#E2E8F0',
           card: '#FFFFFF',
           bg: '#F8FAFC',
           muted: '#64748B',
+          // Official Indian Railways Heritage / Government Identity Tokens
+          maroon: '#7B1113',
+          'maroon-dark': '#560B0D',
+          'maroon-light': '#FFF5F5',
+          gold: '#C2850A',
+          'gold-light': '#FEF9C3',
+          saffron: '#FF671F',
+          ashoka: '#000080',
+          tirangaGreen: '#046A38',
+          govNavy: '#0A2540',
         },
         dept: {
           eng: '#1E40AF',
@@ -53,6 +64,7 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
       boxShadow: {
+        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         'card-subtle': '0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08)',
         'card-hover': '0 4px 12px -2px rgba(11, 25, 44, 0.12), 0 2px 6px -2px rgba(11, 25, 44, 0.08)',
         'modal': '0 20px 25px -5px rgba(11, 25, 44, 0.25), 0 8px 10px -6px rgba(11, 25, 44, 0.2)',

@@ -92,3 +92,64 @@
 .badge-sig { @apply bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
 .badge-trac { @apply bg-purple-50 text-purple-800 border border-purple-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
 .badge-coa { @apply bg-teal-50 text-teal-800 border border-teal-200 px-2.5 py-0.5 rounded-full text-xs font-medium; }
+
+/* Government of India Official Styling Elements */
+.tiranga-strip {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, #FF671F 0%, #FF671F 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #046A38 66.6%, #046A38 100%);
+}
+
+.tiranga-strip-sm {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #FF671F 0%, #FF671F 33.3%, #FFFFFF 33.3%, #FFFFFF 66.6%, #046A38 66.6%, #046A38 100%);
+}
+
+.gov-card {
+  @apply bg-white rounded-xl border border-slate-200/90 shadow-xs hover:border-slate-300 transition-all;
+}
+
+.gov-header-bar {
+  background: linear-gradient(180deg, #071A2E 0%, #050E1A 100%);
+}
+
+.official-stamp-approved {
+  border: 2px dashed #059669;
+  color: #047857;
+  transform: rotate(-3deg);
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: rgba(236, 253, 245, 0.9);
+}
+
+.official-stamp-pending {
+  border: 2px dashed #D97706;
+  color: #B45309;
+  transform: rotate(-2deg);
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: rgba(254, 243, 199, 0.9);
+}
+
+.official-stamp-rejected {
+  border: 2px dashed #DC2626;
+  color: #B91C1C;
+  transform: rotate(3deg);
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background-color: rgba(254, 242, 242, 0.9);
+}
+
+/* Railway Watermark Pattern */
+.railway-watermark-bg {
+  background-image: radial-gradient(rgba(11, 25, 44, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+

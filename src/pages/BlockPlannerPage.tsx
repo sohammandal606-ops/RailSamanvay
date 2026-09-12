@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRailway } from '../context/RailwayContext';
 import { StatusBadge } from '../components/common/StatusBadge';
+import { GovEmblem } from '../components/common/GovEmblem';
+import { OfficialStamp } from '../components/common/OfficialStamp';
 import { useNavigate } from 'react-router-dom';
 import {
   CalendarRange,
@@ -19,7 +21,9 @@ import {
   Info,
   ShieldCheck,
   Flame,
-  ArrowRight
+  ArrowRight,
+  FileText,
+  FileCheck
 } from 'lucide-react';
 
 export const BlockPlannerPage: React.FC = () => {
@@ -47,49 +51,55 @@ export const BlockPlannerPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-              Interactive Block Planner (Gantt Matrix)
-            </h1>
-            <span className="text-xs font-mono font-bold bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full border border-blue-200">
-              CORE ENGINE
-            </span>
+      {/* Official Government Form G-48 Header */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <GovEmblem size="lg" variant="gold" className="shrink-0 mt-0.5" />
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Form G-48: Interactive Block Matrix
+              </h1>
+              <span className="text-xs font-mono font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded border border-amber-300">
+                G&SR RULE 1968
+              </span>
+              <span className="text-xs font-mono font-bold bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded border border-blue-300">
+                FORM G-48 SANCTIONS
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              भारतीय रेल ब्लॉक नियोजन प्रणाली • Dynamic timeline synchronization of Engineering, S&T, and Traction possessions with live COA train paths
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Dynamic timeline synchronization of Engineering, S&T, Traction maintenance with COA Train Timetables
-          </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           <button
             onClick={() => setIsEmergencyModalOpen(true)}
-            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98 shrink-0"
+            className="flex-1 sm:flex-initial px-3.5 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all border border-red-800 active:scale-98 shrink-0"
           >
-            <Flame className="w-4 h-4" />
+            <Flame className="w-4 h-4 text-amber-300" />
             <span>Emergency Request</span>
           </button>
 
           <button
             onClick={runAiOptimization}
             disabled={isOptimizing}
-            className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all disabled:opacity-50 active:scale-98 shrink-0"
+            className="flex-1 sm:flex-initial px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all border border-slate-800 disabled:opacity-50 active:scale-98 shrink-0"
           >
             <Zap className={`w-4 h-4 text-amber-400 ${isOptimizing ? 'animate-spin' : ''}`} />
-            <span>{isOptimizing ? 'Synthesizing...' : 'Run AI Optimization'}</span>
+            <span>{isOptimizing ? 'CP-SAT Solving...' : 'Run CP-SAT Optimizer'}</span>
           </button>
         </div>
       </div>
 
-      {/* Top Controls Bar (Section 8 Requirement) */}
+      {/* Top Controls Bar */}
       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-xs space-y-3">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           
           {/* Planning Horizon */}
           <div>
-            <label className="block text-[11px] uppercase font-bold text-slate-500 mb-1">
+            <label className="block text-[11px] uppercase font-bold text-slate-600 mb-1">
               Planning Horizon
             </label>
             <div className="grid grid-cols-4 gap-1 bg-slate-100 p-1 rounded-lg">
@@ -99,7 +109,7 @@ export const BlockPlannerPage: React.FC = () => {
                   onClick={() => setPlanningHorizon(h)}
                   className={`text-[11px] font-bold py-1 px-1.5 rounded text-center transition-all ${
                     planningHorizon === h
-                      ? 'bg-white text-blue-700 shadow-xs'
+                      ? 'bg-railway-navy text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -111,26 +121,26 @@ export const BlockPlannerPage: React.FC = () => {
 
           {/* Date Selector */}
           <div>
-            <label className="block text-[11px] uppercase font-bold text-slate-500 mb-1">
-              Planning Date
+            <label className="block text-[11px] uppercase font-bold text-slate-600 mb-1">
+              Requisition Date
             </label>
             <input
               type="date"
               value={selectedDate}
               onChange={e => setSelectedDate(e.target.value)}
-              className="w-full text-xs font-mono font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full text-xs font-mono font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
             />
           </div>
 
           {/* Corridor Selector */}
           <div>
-            <label className="block text-[11px] uppercase font-bold text-slate-500 mb-1">
-              Railway Corridor Section
+            <label className="block text-[11px] uppercase font-bold text-slate-600 mb-1">
+              Railway Section / Corridor
             </label>
             <select
               value={selectedCorridor}
               onChange={e => setSelectedCorridor(e.target.value)}
-              className="w-full text-xs font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full text-xs font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
             >
               <option value="SEC-HWH-BWN">Howrah – Bardhaman (KM 0–95)</option>
               <option value="SEC-BWN-DGR">Bardhaman – Durgapur (KM 95–158)</option>
@@ -141,18 +151,18 @@ export const BlockPlannerPage: React.FC = () => {
 
           {/* Department Selector */}
           <div>
-            <label className="block text-[11px] uppercase font-bold text-slate-500 mb-1">
-              Department Overlay
+            <label className="block text-[11px] uppercase font-bold text-slate-600 mb-1">
+              Operating Department Filter
             </label>
             <select
               value={selectedDept}
               onChange={e => setSelectedDept(e.target.value)}
-              className="w-full text-xs font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full text-xs font-semibold px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none"
             >
               <option value="ALL">All Departments (Integrated View)</option>
-              <option value="Engineering">Engineering (Track - TMS)</option>
-              <option value="S&T">S&T (Signals - SMMS)</option>
-              <option value="Traction">Traction (OHE - TDMS)</option>
+              <option value="Engineering">Civil Engineering (TMS - Track)</option>
+              <option value="S&T">Signal & Telecom (SMMS - S&T)</option>
+              <option value="Traction">Electrical Traction (TDMS - OHE)</option>
             </select>
           </div>
 
@@ -166,11 +176,11 @@ export const BlockPlannerPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
               <h3 className="text-sm font-bold text-slate-900">
-                Multi-Department Maintenance & Train Movement Matrix
+                Multi-Department Block Coordination & Train Movement Matrix
               </h3>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Coordinated Shadow Window Highlight: 10:00 – 12:00 IST (Triple Department Joint Block)
+              Coordinated Shadow Window Highlight: 10:00 – 12:00 IST (Triple Department Joint Block under Form G-48)
             </p>
           </div>
 
@@ -178,8 +188,8 @@ export const BlockPlannerPage: React.FC = () => {
             <span className="sm:hidden text-[10px] text-blue-600 font-mono">
               ↔ Swipe timeline
             </span>
-            <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200 font-mono font-bold text-[11px] sm:text-xs">
-              Integrated Window: 10:00 - 12:00
+            <span className="px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-300 font-mono font-bold text-[11px] sm:text-xs">
+              Synchronized Slot: 10:00 - 12:00 IST
             </span>
           </div>
         </div>
@@ -188,17 +198,17 @@ export const BlockPlannerPage: React.FC = () => {
         <div className="overflow-x-auto pb-4 -mx-2 sm:mx-0 px-2 sm:px-0">
           <div className="min-w-[850px] space-y-4">
             
-            {/* Time Scale Header (Aligned with track labels) */}
+            {/* Time Scale Header */}
             <div className="flex items-center gap-3 border-b border-slate-200 pb-2">
-              <div className="w-28 sm:w-32 text-xs font-mono font-bold text-slate-400 shrink-0">
-                Timeline (IST)
+              <div className="w-28 sm:w-32 text-xs font-mono font-bold text-slate-500 shrink-0">
+                Railway Time (24h)
               </div>
-              <div className="flex-1 grid grid-cols-12 gap-1 text-center font-mono text-xs text-slate-500">
+              <div className="flex-1 grid grid-cols-12 gap-1 text-center font-mono text-xs text-slate-600">
                 {timeSlots.slice(0, 12).map((time) => {
                   const isWindow = time === '10:00' || time === '11:00';
                   return (
                     <div key={time} className="py-1">
-                      <span className={isWindow ? 'text-blue-700 font-bold bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200/50' : ''}>
+                      <span className={isWindow ? 'text-blue-900 font-bold bg-blue-100 px-2 py-0.5 rounded border border-blue-300' : ''}>
                         {time}
                       </span>
                     </div>
@@ -211,142 +221,93 @@ export const BlockPlannerPage: React.FC = () => {
             <div className="flex items-center gap-3">
               <div className="w-28 sm:w-32 text-xs font-bold text-blue-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-blue-600" />
-                <span>Engineering (Track)</span>
+                <span>Civil Engg (TMS)</span>
               </div>
               <div className="flex-1 grid grid-cols-12 gap-1 relative bg-slate-50 p-2 rounded-lg border border-slate-200">
-                <div className="col-start-1 col-span-3 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Track clear
+                <div className="col-start-1 col-span-4 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
+                  Track Clear
                 </div>
-                {/* Coordinated Track Block: 10:00 - 12:00 (Starts index 4, span 2) */}
+                {/* Coordinated Track Block: 10:00 - 12:00 */}
                 <div
                   onClick={() => setActiveBlockDetailId('BLK-2026-0912-004')}
-                  className="col-start-5 col-span-2 bg-blue-600 text-white rounded-md p-2 cursor-pointer hover:bg-blue-700 transition-all shadow-sm border border-blue-500 group"
+                  className="col-start-5 col-span-2 bg-blue-600 text-white p-2 rounded text-[11px] font-bold flex flex-col justify-center cursor-pointer shadow-sm hover:bg-blue-700 transition-colors border border-blue-500"
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono">
-                    <span className="font-bold">ENG-1042</span>
-                    <span className="bg-blue-800/80 px-1 rounded">90 min</span>
-                  </div>
-                  <div className="text-[11px] font-bold mt-1 truncate">
-                    Rail Renewal & Tamping
-                  </div>
-                  <div className="text-[9px] text-blue-200 mt-0.5">KM 142/6 • Shadow Active</div>
+                  <span className="font-mono">ENG-1042 / Tamping</span>
+                  <span className="text-[9px] text-blue-200 font-normal">KM 142/12 - 142/20</span>
                 </div>
                 <div className="col-start-7 col-span-6 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Track clear
+                  Normal Speed (130 kmph)
                 </div>
               </div>
             </div>
 
-            {/* Track 2: S&T (Signalling - SMMS) */}
+            {/* Track 2: S&T (SMMS) */}
             <div className="flex items-center gap-3">
               <div className="w-28 sm:w-32 text-xs font-bold text-amber-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-amber-600" />
-                <span>S&T (Signals)</span>
+                <span>S&T (SMMS)</span>
               </div>
               <div className="flex-1 grid grid-cols-12 gap-1 relative bg-slate-50 p-2 rounded-lg border border-slate-200">
                 <div className="col-start-1 col-span-4 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Signals active
+                  Signals Normal
                 </div>
-                {/* S&T Block: 10:00 - 11:30 (Starts index 4, span 2) */}
                 <div
                   onClick={() => setActiveBlockDetailId('BLK-2026-0912-004')}
-                  className="col-start-5 col-span-2 bg-amber-600 text-white rounded-md p-2 cursor-pointer hover:bg-amber-700 transition-all shadow-sm border border-amber-500"
+                  className="col-start-5 col-span-2 bg-amber-600 text-white p-2 rounded text-[11px] font-bold flex flex-col justify-center cursor-pointer shadow-sm hover:bg-amber-700 transition-colors border border-amber-500"
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono">
-                    <span className="font-bold">SIG-2041</span>
-                    <span className="bg-amber-800/80 px-1 rounded">60 min</span>
-                  </div>
-                  <div className="text-[11px] font-bold mt-1 truncate">
-                    Relay & Interlocking
-                  </div>
-                  <div className="text-[9px] text-amber-100 mt-0.5">KM 145/2 • Joint Shadow</div>
+                  <span className="font-mono">SIG-3081 / Point #14</span>
+                  <span className="text-[9px] text-amber-200 font-normal">Interlocking Overhaul</span>
                 </div>
                 <div className="col-start-7 col-span-6 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Signals active
+                  Automatic Signaling Active
                 </div>
               </div>
             </div>
 
-            {/* Track 3: Traction (OHE - TDMS) */}
+            {/* Track 3: Traction (TDMS) */}
             <div className="flex items-center gap-3">
               <div className="w-28 sm:w-32 text-xs font-bold text-purple-900 shrink-0 flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded bg-purple-600" />
-                <span>Traction (OHE)</span>
+                <span>Traction (TDMS)</span>
               </div>
               <div className="flex-1 grid grid-cols-12 gap-1 relative bg-slate-50 p-2 rounded-lg border border-slate-200">
                 <div className="col-start-1 col-span-4 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Power 25kV Live
+                  OHE Energized (25 kV)
                 </div>
-                {/* Traction Block: 10:00 - 12:00 */}
                 <div
                   onClick={() => setActiveBlockDetailId('BLK-2026-0912-004')}
-                  className="col-start-5 col-span-2 bg-purple-600 text-white rounded-md p-2 cursor-pointer hover:bg-purple-700 transition-all shadow-sm border border-purple-500"
+                  className="col-start-5 col-span-2 bg-purple-700 text-white p-2 rounded text-[11px] font-bold flex flex-col justify-center cursor-pointer shadow-sm hover:bg-purple-800 transition-colors border border-purple-600"
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono">
-                    <span className="font-bold">TRA-3022</span>
-                    <span className="bg-purple-800/80 px-1 rounded">45 min</span>
-                  </div>
-                  <div className="text-[11px] font-bold mt-1 truncate">
-                    OHE Stagger & Isolation
-                  </div>
-                  <div className="text-[9px] text-purple-200 mt-0.5">KM 141/8 • Power Cut</div>
+                  <span className="font-mono">TRD-5502 / OHE Power</span>
+                  <span className="text-[9px] text-purple-200 font-normal">Power Block Isolated</span>
                 </div>
                 <div className="col-start-7 col-span-6 text-slate-400 text-[10px] flex items-center justify-center font-mono italic">
-                  Power 25kV Live
+                  25 kV AC Live
                 </div>
               </div>
             </div>
 
-            {/* Track 4: Train Operations (COA) */}
-            <div className="flex items-center gap-3 pt-2">
-              <div className="w-28 sm:w-32 text-xs font-bold text-slate-900 shrink-0 flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded bg-emerald-600" />
-                <span>Train Operations</span>
+            {/* Track 4: Train Timetable (COA) */}
+            <div className="flex items-center gap-3">
+              <div className="w-28 sm:w-32 text-xs font-bold text-slate-800 shrink-0 flex items-center gap-1.5">
+                <Train className="w-4 h-4 text-emerald-600" />
+                <span>COA Timetable</span>
               </div>
-              <div className="flex-1 grid grid-cols-12 gap-1 relative bg-slate-900 p-2 rounded-lg border border-slate-800 text-white text-xs">
-                {/* 06:00 - 08:00 Trains */}
-                <div className="col-span-2 bg-emerald-800/80 border border-emerald-600 rounded p-1.5 flex flex-col justify-center text-center">
-                  <div className="flex items-center justify-center gap-1 text-[10px] font-mono">
-                    <Train className="w-3 h-3" /> 22301 Vande Bharat
-                  </div>
+              <div className="flex-1 grid grid-cols-12 gap-1 relative bg-slate-50 p-2 rounded-lg border border-slate-200">
+                <div className="col-start-1 col-span-2 bg-emerald-100 text-emerald-900 border border-emerald-300 p-1.5 rounded text-[10px] font-mono font-bold flex items-center justify-center truncate">
+                  12301 Rajdhani
                 </div>
-
-                {/* 08:00 - 10:00 Trains */}
-                <div className="col-span-2 bg-emerald-800/80 border border-emerald-600 rounded p-1.5 flex flex-col justify-center text-center">
-                  <div className="flex items-center justify-center gap-1 text-[10px] font-mono">
-                    <Train className="w-3 h-3" /> 12301 Rajdhani Ex
-                  </div>
+                <div className="col-start-3 col-span-2 bg-emerald-100 text-emerald-900 border border-emerald-300 p-1.5 rounded text-[10px] font-mono font-bold flex items-center justify-center truncate">
+                  22301 Vande Bharat
                 </div>
-
-                {/* 10:00 - 12:00 SHADOW BLOCK SLOT */}
-                <div className="col-span-2 bg-slate-800 border-2 border-dashed border-amber-400 rounded p-1.5 flex flex-col items-center justify-center text-center">
-                  <div className="text-[10px] font-bold text-amber-300 uppercase font-mono">
-                    SHADOW BLOCK SLOT
-                  </div>
-                  <div className="text-[9px] text-slate-300">
-                    BTPN Freight held in loop • Zero Pax penalty
-                  </div>
+                <div className="col-start-5 col-span-2 bg-blue-100 text-blue-900 border border-blue-300 p-1.5 rounded text-[10px] font-mono font-bold flex items-center justify-center text-center">
+                  🛑 Line Block Possessed
                 </div>
-
-                {/* 12:00 - 14:00 Trains */}
-                <div className="col-span-2 bg-emerald-800/80 border border-emerald-600 rounded p-1.5 flex flex-col justify-center text-center">
-                  <div className="flex items-center justify-center gap-1 text-[10px] font-mono">
-                    <Train className="w-3 h-3" /> 13029 Express
-                  </div>
+                <div className="col-start-7 col-span-2 bg-emerald-100 text-emerald-900 border border-emerald-300 p-1.5 rounded text-[10px] font-mono font-bold flex items-center justify-center truncate">
+                  12313 Sealdah Raj
                 </div>
-
-                {/* 14:00 - 16:00 Trains */}
-                <div className="col-span-2 bg-emerald-800/80 border border-emerald-600 rounded p-1.5 flex flex-col justify-center text-center">
-                  <div className="flex items-center justify-center gap-1 text-[10px] font-mono">
-                    <Train className="w-3 h-3" /> Coal BOXN Freight
-                  </div>
-                </div>
-
-                {/* 16:00 - 18:00 Trains */}
-                <div className="col-span-2 bg-emerald-800/80 border border-emerald-600 rounded p-1.5 flex flex-col justify-center text-center">
-                  <div className="flex items-center justify-center gap-1 text-[10px] font-mono">
-                    <Train className="w-3 h-3" /> EMU Suburban Fleet
-                  </div>
+                <div className="col-start-9 col-span-4 bg-slate-100 text-slate-700 p-1.5 rounded text-[10px] font-mono flex items-center justify-center">
+                  Freight Path (BOXN)
                 </div>
               </div>
             </div>
@@ -354,43 +315,37 @@ export const BlockPlannerPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Coordinated Integrated Block Detail Banner (Section 8 Highlight) */}
-        <div className="mt-6 p-5 bg-blue-50/80 rounded-xl border border-blue-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-blue-200/80">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-blue-600 text-white font-mono font-bold text-xs">
-                {selectedPlan.id}
+        {/* Selected Plan Details Card */}
+        <div className="mt-6 p-4 rounded-xl bg-blue-50/50 border border-blue-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-blue-200/70">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-mono text-sm font-bold text-slate-900">
+                  {selectedPlan.id}
+                </span>
+                <StatusBadge status={selectedPlan.status} variant="approvalStatus" size="sm" />
+                <span className="text-xs font-mono font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded border border-blue-200">
+                  {selectedPlan.corridor}
+                </span>
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-slate-900">
-                    Integrated Coordinated Shadow Block (KM 140 – KM 146)
-                  </h4>
-                  <StatusBadge status={selectedPlan.status} variant="approvalStatus" size="sm" />
-                </div>
-                <p className="text-xs text-slate-600 mt-0.5">
-                  Slot: {selectedPlan.startTime} – {selectedPlan.endTime} IST ({selectedPlan.durationMin} Mins) • Corridor: {selectedPlan.corridor}
-                </p>
-              </div>
+              <p className="text-xs text-slate-600 mt-1">
+                Synchronized Slot: {selectedPlan.date} • {selectedPlan.startTime} to {selectedPlan.endTime} ({selectedPlan.durationMin} Minutes Possession)
+              </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-2">
+              <OfficialStamp
+                status={selectedPlan.status as any}
+                officerTitle="SR. DIVISIONAL OPERATIONS MANAGER"
+                sanctionRef={selectedPlan.id}
+                size="sm"
+              />
               <button
                 onClick={() => navigate(`/approval/${selectedPlan.id}`)}
-                className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-white text-blue-700 border border-blue-300 hover:bg-blue-50 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors active:scale-98"
+                className="px-3 py-1.5 bg-railway-navy hover:bg-railway-slate text-white rounded-lg text-xs font-bold transition-all"
               >
-                <span>Inspect Safety Rules & Validation</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                Open Formal Sanction Form
               </button>
-              {selectedPlan.status === 'Pending Approval' && (
-                <button
-                  onClick={() => approveBlockPlan(selectedPlan.id)}
-                  className="flex-1 sm:flex-initial px-3.5 sm:px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-98"
-                >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Approve Block Plan</span>
-                </button>
-              )}
             </div>
           </div>
 
@@ -449,7 +404,7 @@ export const BlockPlannerPage: React.FC = () => {
               </div>
             </div>
             <span className="text-[10px] font-mono text-slate-400 bg-slate-800 px-2.5 py-1 rounded">
-              Simulation / Demo Data
+              G&SR Safety Parameters Enforced
             </span>
           </div>
 

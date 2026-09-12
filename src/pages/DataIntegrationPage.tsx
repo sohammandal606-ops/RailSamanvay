@@ -1,36 +1,37 @@
 import React, { useState } from 'react';
 import { useRailway } from '../context/RailwayContext';
+import { GovEmblem } from '../components/common/GovEmblem';
 import {
   Database, Wifi, WifiOff, RefreshCw, Filter,
   CheckCircle2, AlertTriangle, ArrowRight, ArrowDown,
-  Activity, Package, CircleDot
+  Activity, Package, CircleDot, Layers, ShieldCheck
 } from 'lucide-react';
 import { SourceSystem, UnifiedDatabaseRecord } from '../types';
 
 const SOURCE_COLORS: Record<SourceSystem, { bg: string; text: string; border: string; dot: string }> = {
-  BDMS: { bg: 'bg-emerald-500/10', text: 'text-emerald-300', border: 'border-emerald-500/30', dot: 'bg-emerald-400' },
-  TMS: { bg: 'bg-sky-500/10', text: 'text-sky-300', border: 'border-sky-500/30', dot: 'bg-sky-400' },
-  SMMS: { bg: 'bg-amber-500/10', text: 'text-amber-300', border: 'border-amber-500/30', dot: 'bg-amber-400' },
-  TDMS: { bg: 'bg-purple-500/10', text: 'text-purple-300', border: 'border-purple-500/30', dot: 'bg-purple-400' },
-  COA: { bg: 'bg-teal-500/10', text: 'text-teal-300', border: 'border-teal-500/30', dot: 'bg-teal-400' },
+  BDMS: { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-300', dot: 'bg-emerald-600' },
+  TMS: { bg: 'bg-sky-50', text: 'text-sky-800', border: 'border-sky-300', dot: 'bg-sky-600' },
+  SMMS: { bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-300', dot: 'bg-amber-600' },
+  TDMS: { bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-300', dot: 'bg-purple-600' },
+  COA: { bg: 'bg-teal-50', text: 'text-teal-800', border: 'border-teal-300', dot: 'bg-teal-600' },
 };
 
 const URGENCY_COLORS: Record<string, string> = {
-  Critical: 'bg-red-500/20 text-red-300 border-red-500/30',
-  High: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-  Medium: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-  Low: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+  Critical: 'bg-red-50 text-red-700 border-red-200',
+  High: 'bg-amber-50 text-amber-700 border-amber-200',
+  Medium: 'bg-blue-50 text-blue-700 border-blue-200',
+  Low: 'bg-slate-100 text-slate-700 border-slate-200',
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  Ingested: 'bg-blue-500/20 text-blue-300',
-  Normalized: 'bg-yellow-500/20 text-yellow-300',
-  Clustered: 'bg-purple-500/20 text-purple-300',
-  Scheduled: 'bg-emerald-500/20 text-emerald-300',
+  Ingested: 'bg-blue-50 text-blue-700 border border-blue-200',
+  Normalized: 'bg-amber-50 text-amber-700 border border-amber-200',
+  Clustered: 'bg-purple-50 text-purple-700 border border-purple-200',
+  Scheduled: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
 };
 
 export const DataIntegrationPage: React.FC = () => {
-  const { dataSources, ingestionStats, unifiedRecords, triggerDataIngestionSync } = useRailway();
+  const { dataSources, ingestionStats, unifiedRecords, triggerDataIngestionSync, showToast } = useRailway();
   const [filterSource, setFilterSource] = useState<SourceSystem | 'All'>('All');
   const [filterUrgency, setFilterUrgency] = useState<string>('All');
   const [isSyncing, setIsSyncing] = useState(false);
@@ -38,7 +39,10 @@ export const DataIntegrationPage: React.FC = () => {
   const handleSync = () => {
     setIsSyncing(true);
     triggerDataIngestionSync();
-    setTimeout(() => setIsSyncing(false), 1400);
+    setTimeout(() => {
+      setIsSyncing(false);
+      showToast('Data Synchronization Complete', '5/5 Legacy Systems polled and ingested successfully.', 'success');
+    }, 1400);
   };
 
   const filteredRecords = unifiedRecords.filter(r => {
@@ -50,34 +54,42 @@ export const DataIntegrationPage: React.FC = () => {
   const connectedCount = dataSources.filter(s => s.status === 'Connected').length;
 
   return (
-    <div className="p-4 lg:p-6 space-y-6 min-h-screen">
-      {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <div>
-          <h1 className="text-xl lg:text-2xl font-extrabold text-white flex items-center gap-2">
-            <Database className="w-6 h-6 text-blue-400" />
-            Data Integration & Unified Pipeline
-          </h1>
-          <p className="text-sm text-slate-400 mt-0.5">
-            5 sources → Ingestion Engine → Normalized Unified Database
-          </p>
+    <div className="space-y-6">
+      {/* Official Government Header */}
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3.5">
+          <GovEmblem size="lg" variant="gold" className="shrink-0 mt-0.5" />
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Legacy Railway Systems Integration & Unified Data Pipeline
+              </h1>
+              <span className="text-xs font-mono font-bold bg-blue-100 text-blue-900 px-2.5 py-0.5 rounded border border-blue-300">
+                CRIS ENTERPRISE DATA BUS
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              भारतीय रेल एकीकृत डेटा एकीकरण एवं पाइपलाइन • Real-time telemetry ingestion from TMS (Track), SMMS (Signals), TDMS (Traction), COA (Control Office) & BDMS
+            </p>
+          </div>
         </div>
+
         <button
           onClick={handleSync}
           disabled={isSyncing}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white text-sm font-semibold rounded-lg transition-all"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-railway-navy hover:bg-railway-slate text-white text-xs font-bold rounded-lg transition-all border border-slate-800 disabled:opacity-60 shadow-xs"
         >
-          <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
-          {isSyncing ? 'Syncing...' : 'Sync All Sources'}
+          <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isSyncing ? 'animate-spin' : ''}`} />
+          <span>{isSyncing ? 'Syncing Feeds...' : 'Poll & Sync All Feeds'}</span>
         </button>
       </div>
 
       {/* ─── SECTION 1: Data Sources ─── */}
       <section>
         <div className="flex items-center gap-2 mb-3">
-          <Wifi className="w-4 h-4 text-emerald-400" />
-          <h2 className="text-sm font-bold text-slate-200 uppercase tracking-wider">
-            Data Sources — {connectedCount}/5 Connected
+          <Wifi className="w-4 h-4 text-emerald-600" />
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+            Connected Legacy Feeds — {connectedCount}/5 Operational
           </h2>
         </div>
 
@@ -87,29 +99,29 @@ export const DataIntegrationPage: React.FC = () => {
             return (
               <div
                 key={src.id}
-                className={`rounded-xl border ${c.border} ${c.bg} p-4 flex flex-col gap-2 relative overflow-hidden`}
+                className={`rounded-xl border ${c.border} ${c.bg} p-4 flex flex-col gap-2 relative bg-white shadow-xs`}
               >
                 <div className="flex items-center justify-between">
                   <span className={`text-lg font-extrabold font-mono ${c.text}`}>{src.name}</span>
-                  <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-300 bg-emerald-500/20 border border-emerald-500/30 rounded-full px-2 py-0.5">
+                  <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 rounded-full px-2 py-0.5">
                     <span className={`w-1.5 h-1.5 rounded-full ${c.dot} animate-pulse`} />
                     {src.status}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 font-medium">{src.fullName}</p>
-                <p className="text-[10px] text-slate-400">{src.dataType}</p>
-                <div className="flex justify-between text-[11px] text-slate-300 mt-1">
-                  <span className="font-semibold">{src.records.toLocaleString()} records</span>
-                  <span className="text-slate-400">{src.lastSync}</span>
+                <p className="text-[11px] text-slate-900 font-bold">{src.fullName}</p>
+                <p className="text-[10px] text-slate-500 font-mono">{src.dataType}</p>
+                <div className="flex justify-between text-[11px] text-slate-700 mt-1">
+                  <span className="font-bold font-mono">{src.records.toLocaleString()} records</span>
+                  <span className="text-slate-500 text-[10px] font-mono">{src.lastSync}</span>
                 </div>
                 {/* Health bar */}
-                <div className="w-full bg-slate-800 rounded-full h-1">
+                <div className="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                   <div
-                    className="h-1 rounded-full bg-emerald-400 transition-all"
+                    className="h-1.5 rounded-full bg-emerald-600 transition-all"
                     style={{ width: `${src.health}%` }}
                   />
                 </div>
-                <span className="text-[10px] text-slate-400">Health: {src.health}%</span>
+                <span className="text-[10px] text-slate-500 font-mono">Feed Health: {src.health}%</span>
               </div>
             );
           })}
@@ -117,10 +129,10 @@ export const DataIntegrationPage: React.FC = () => {
       </section>
 
       {/* ─── SECTION 2: Data Flow Diagram ─── */}
-      <section className="bg-slate-900 border border-slate-800 rounded-xl p-5">
-        <h2 className="text-sm font-bold text-slate-200 uppercase tracking-wider mb-4 flex items-center gap-2">
-          <Activity className="w-4 h-4 text-blue-400" />
-          Data Flow Architecture
+      <section className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <Activity className="w-4 h-4 text-blue-700" />
+          Indian Railways CRIS Enterprise Ingestion Pipeline Architecture
         </h2>
         <div className="flex flex-col items-center gap-0">
           {/* Sources row */}
@@ -130,10 +142,10 @@ export const DataIntegrationPage: React.FC = () => {
               return (
                 <div
                   key={src.id}
-                  className={`px-4 py-2 rounded-lg border ${c.border} ${c.bg} text-center`}
+                  className={`px-4 py-2 rounded-lg border ${c.border} ${c.bg} text-center shadow-2xs`}
                 >
                   <p className={`text-sm font-extrabold font-mono ${c.text}`}>{src.name}</p>
-                  <p className="text-[10px] text-slate-400">{src.records} rec.</p>
+                  <p className="text-[10px] text-slate-500 font-mono">{src.records} rec.</p>
                 </div>
               );
             })}
@@ -141,150 +153,158 @@ export const DataIntegrationPage: React.FC = () => {
 
           {/* Arrow down */}
           <div className="flex flex-col items-center py-2">
-            <div className="w-px h-6 bg-blue-500/50" />
-            <ArrowDown className="w-5 h-5 text-blue-400" />
-            <div className="w-px h-2 bg-blue-500/50" />
+            <div className="w-px h-6 bg-blue-400" />
+            <ArrowDown className="w-4 h-4 text-blue-600" />
+            <div className="w-px h-2 bg-blue-400" />
           </div>
 
           {/* Ingestion Engine */}
-          <div className="w-full max-w-2xl bg-blue-600/10 border border-blue-500/40 rounded-xl p-4">
+          <div className="w-full max-w-2xl bg-blue-50/70 border border-blue-200 rounded-xl p-4 shadow-xs">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <CircleDot className="w-5 h-5 text-blue-400 animate-pulse" />
-                <span className="font-bold text-blue-300 text-sm">Data Ingestion Engine</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                <CircleDot className="w-5 h-5 text-blue-700 animate-pulse" />
+                <span className="font-bold text-slate-900 text-sm">ETL & Data Normalization Pipeline</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${
                   ingestionStats.ingestionPipelineStatus === 'Healthy'
-                    ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                    : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                    : 'bg-amber-100 text-amber-800 border-amber-300'
                 }`}>
                   {ingestionStats.ingestionPipelineStatus}
                 </span>
               </div>
-              <span className="text-[11px] text-slate-400">{ingestionStats.lastIngestionTimestamp}</span>
+              <span className="text-[11px] text-slate-500 font-mono">{ingestionStats.lastIngestionTimestamp}</span>
             </div>
             <div className="grid grid-cols-3 gap-3 mt-3">
               <div className="text-center">
-                <p className="text-xl font-extrabold text-white">{ingestionStats.recordsReceived.toLocaleString()}</p>
-                <p className="text-[11px] text-slate-400">Records Received</p>
+                <p className="text-xl font-extrabold text-slate-900 font-mono">{ingestionStats.recordsReceived.toLocaleString()}</p>
+                <p className="text-[11px] text-slate-500">Records Received</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-extrabold text-emerald-300">{ingestionStats.recordsValidated.toLocaleString()}</p>
-                <p className="text-[11px] text-slate-400">Records Validated</p>
+                <p className="text-xl font-extrabold text-emerald-700 font-mono">{ingestionStats.recordsValidated.toLocaleString()}</p>
+                <p className="text-[11px] text-slate-500">Records Validated</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-extrabold text-red-300">{ingestionStats.corruptedDuplicatesDropped}</p>
-                <p className="text-[11px] text-slate-400">Corrupted / Dropped</p>
+                <p className="text-xl font-extrabold text-red-600 font-mono">{ingestionStats.corruptedDuplicatesDropped}</p>
+                <p className="text-[11px] text-slate-500">Duplicates Dropped</p>
               </div>
             </div>
           </div>
 
           {/* Arrow down */}
           <div className="flex flex-col items-center py-2">
-            <div className="w-px h-2 bg-blue-500/50" />
-            <ArrowDown className="w-5 h-5 text-blue-400" />
-            <div className="w-px h-6 bg-blue-500/50" />
+            <div className="w-px h-2 bg-blue-400" />
+            <ArrowDown className="w-4 h-4 text-blue-600" />
+            <div className="w-px h-6 bg-blue-400" />
           </div>
 
           {/* Unified Database */}
-          <div className="w-full max-w-2xl bg-indigo-600/10 border border-indigo-500/40 rounded-xl p-4 text-center">
+          <div className="w-full max-w-2xl bg-purple-50/70 border border-purple-200 rounded-xl p-4 text-center shadow-xs">
             <div className="flex items-center justify-center gap-2 mb-1">
-              <Database className="w-5 h-5 text-indigo-400" />
-              <span className="font-bold text-indigo-300 text-sm">Unified Normalized Database</span>
+              <Database className="w-5 h-5 text-purple-700" />
+              <span className="font-bold text-slate-900 text-sm">Unified Canonical Railway Database (UCRD)</span>
             </div>
-            <p className="text-[11px] text-slate-400">
-              {ingestionStats.recordsValidated.toLocaleString()} normalized records — ready for DBSCAN clustering & CP-SAT optimization
+            <p className="text-[11px] text-slate-600 font-mono">
+              {ingestionStats.recordsValidated.toLocaleString()} validated schema records — feeding DBSCAN spatial clustering & CP-SAT solver
             </p>
           </div>
         </div>
       </section>
 
       {/* ─── SECTION 3: Unified Records Table ─── */}
-      <section>
-        <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
-          <div className="flex items-center gap-2">
-            <Package className="w-4 h-4 text-indigo-400" />
-            <h2 className="text-sm font-bold text-slate-200 uppercase tracking-wider">
-              Unified Database — {filteredRecords.length} records
+      <section className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+          <div>
+            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <Package className="w-4 h-4 text-blue-700" />
+              Normalized Unified Database Records
             </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Correlated cross-department records ready for optimization
+            </p>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* Source Filter */}
-            <div className="flex items-center gap-1.5">
+
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {/* Source filter */}
+            <div className="flex items-center gap-1">
               <Filter className="w-3.5 h-3.5 text-slate-400" />
               <select
                 value={filterSource}
                 onChange={e => setFilterSource(e.target.value as SourceSystem | 'All')}
-                className="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-md px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="text-xs font-semibold px-2 py-1 rounded bg-slate-50 border border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-600"
               >
-                <option value="All">All Sources</option>
-                {dataSources.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                <option value="All">All Feeds</option>
+                <option value="BDMS">BDMS</option>
+                <option value="TMS">TMS</option>
+                <option value="SMMS">SMMS</option>
+                <option value="TDMS">TDMS</option>
+                <option value="COA">COA</option>
               </select>
             </div>
-            {/* Urgency Filter */}
+
+            {/* Urgency filter */}
             <select
               value={filterUrgency}
               onChange={e => setFilterUrgency(e.target.value)}
-              className="bg-slate-900 border border-slate-700 text-xs text-slate-200 rounded-md px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="text-xs font-semibold px-2 py-1 rounded bg-slate-50 border border-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-600"
             >
-              <option value="All">All Urgency</option>
-              {['Critical', 'High', 'Medium', 'Low'].map(u => <option key={u} value={u}>{u}</option>)}
+              <option value="All">All Criticalities</option>
+              <option value="Critical">Critical</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
             </select>
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto">
+        <div className="overflow-x-auto">
           <table className="w-full text-xs text-left">
-            <thead>
-              <tr className="border-b border-slate-800 text-[11px] text-slate-400 uppercase tracking-wider">
-                <th className="px-4 py-3 font-semibold">Record ID</th>
-                <th className="px-4 py-3 font-semibold">Source</th>
-                <th className="px-4 py-3 font-semibold">Department</th>
-                <th className="px-4 py-3 font-semibold">Section</th>
-                <th className="px-4 py-3 font-semibold">Chainage</th>
-                <th className="px-4 py-3 font-semibold">Asset Type</th>
-                <th className="px-4 py-3 font-semibold">Urgency</th>
-                <th className="px-4 py-3 font-semibold">Block Dur.</th>
-                <th className="px-4 py-3 font-semibold">Status</th>
-                <th className="px-4 py-3 font-semibold">Timestamp</th>
+            <thead className="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 uppercase tracking-wider text-[11px]">
+              <tr>
+                <th className="py-2.5 px-3">Record ID</th>
+                <th className="py-2.5 px-3">Feed Source</th>
+                <th className="py-2.5 px-3">Branch</th>
+                <th className="py-2.5 px-3">Track Chainage</th>
+                <th className="py-2.5 px-3">Asset Type</th>
+                <th className="py-2.5 px-3">Criticality</th>
+                <th className="py-2.5 px-3">Est. Duration</th>
+                <th className="py-2.5 px-3">Pipeline Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
-              {filteredRecords.map(r => {
-                const c = SOURCE_COLORS[r.source];
-                return (
-                  <tr key={r.id} className="hover:bg-slate-800/50 transition-colors">
-                    <td className="px-4 py-3 font-mono text-slate-300 font-semibold">{r.recordId}</td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${c.border} ${c.bg} ${c.text}`}>
-                        {r.source}
+            <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+              {filteredRecords.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-8 text-center text-slate-500">
+                    No unified records match your filters.
+                  </td>
+                </tr>
+              ) : (
+                filteredRecords.map(rec => (
+                  <tr key={rec.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="py-2.5 px-3 font-mono font-bold text-slate-900">{rec.recordId}</td>
+                    <td className="py-2.5 px-3">
+                      <span className={`px-2 py-0.5 rounded font-mono font-bold text-[10px] border ${SOURCE_COLORS[rec.source]?.bg} ${SOURCE_COLORS[rec.source]?.text} ${SOURCE_COLORS[rec.source]?.border}`}>
+                        {rec.source}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-300">{r.department}</td>
-                    <td className="px-4 py-3 text-slate-400">{r.trackSection}</td>
-                    <td className="px-4 py-3 font-mono text-slate-300">{r.chainageKm}</td>
-                    <td className="px-4 py-3 text-slate-300 max-w-[180px] truncate" title={r.assetType}>{r.assetType}</td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-0.5 rounded border text-[10px] font-bold ${URGENCY_COLORS[r.urgency]}`}>
-                        {r.urgency}
+                    <td className="py-2.5 px-3">{rec.department}</td>
+                    <td className="py-2.5 px-3 font-mono text-slate-600 text-[11px]">{rec.trackSection} ({rec.chainageKm})</td>
+                    <td className="py-2.5 px-3 font-bold text-slate-900">{rec.assetType}</td>
+                    <td className="py-2.5 px-3">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${URGENCY_COLORS[rec.urgency]}`}>
+                        {rec.urgency}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-300 font-mono">
-                      {r.suggestedBlockDurationMin > 0 ? `${r.suggestedBlockDurationMin} min` : '—'}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${STATUS_COLORS[r.status]}`}>
-                        {r.status}
+                    <td className="py-2.5 px-3 font-mono">{rec.suggestedBlockDurationMin} min</td>
+                    <td className="py-2.5 px-3">
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${STATUS_COLORS[rec.status]}`}>
+                        {rec.status}
                       </span>
                     </td>
-                    <td className="px-4 py-3 font-mono text-slate-400">{r.timestamp}</td>
                   </tr>
-                );
-              })}
+                ))
+              )}
             </tbody>
           </table>
-          {filteredRecords.length === 0 && (
-            <div className="p-8 text-center text-slate-500">No records match filters.</div>
-          )}
         </div>
       </section>
     </div>

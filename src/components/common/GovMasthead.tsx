@@ -72,9 +72,9 @@ export const GovMasthead: React.FC<GovMastheadProps> = ({
           
           {/* Left: Official Government of India & Ministry Titles */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <GovEmblem size="sm" variant={isDark ? 'gold' : 'navy'} />
-            <div className="leading-tight truncate">
-              <div className="flex items-center gap-1.5 flex-wrap">
+            <GovEmblem size="sm" variant={isDark ? 'gold' : 'navy'} className="shrink-0" />
+            <div className="leading-tight">
+              <div className="flex items-center gap-1.5 flex-wrap text-[11px] sm:text-xs">
                 <span className={`font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   {language === 'HI' ? 'भारत सरकार' : 'GOVERNMENT OF INDIA'}
                 </span>

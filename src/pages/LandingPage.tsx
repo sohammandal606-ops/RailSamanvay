@@ -39,30 +39,28 @@ export const LandingPage: React.FC = () => {
 
       {/* Primary National Portal Header */}
       <header className="sticky top-0 z-40 bg-railway-navy text-white shadow-md border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-18 flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2 sm:gap-4">
           {/* Logo & Dual Title */}
-          <div className="flex items-center gap-3 min-w-0">
-            <GovEmblem size="lg" variant="gold" />
-            <div className="min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+            <GovEmblem size="md" variant="gold" className="shrink-0 sm:hidden" />
+            <GovEmblem size="lg" variant="gold" className="shrink-0 hidden sm:inline-flex" />
+            <div className="min-w-0 overflow-hidden">
+              <div className="flex items-center gap-1.5 flex-nowrap">
+                <span className="text-base sm:text-xl font-extrabold tracking-tight whitespace-nowrap">
                   RailSamanvay
                 </span>
-                <span className="text-[10px] sm:text-xs font-mono font-bold bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded border border-amber-500/30 shrink-0">
+                <span className="text-[10px] sm:text-xs font-mono font-bold bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded border border-amber-500/30 shrink-0 hidden sm:inline">
                   AI-OPS
                 </span>
               </div>
               <p className="text-[10px] sm:text-xs text-amber-400 font-medium truncate">
-                रेल समन्वय • Automatic Block Planning System
-              </p>
-              <p className="text-[9px] text-slate-400 font-mono hidden sm:block">
-                Ministry of Railways • Government of India
+                रेल समन्वय • Auto Block Planning System
               </p>
             </div>
           </div>
 
           {/* Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-300">
+          <nav className="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-300 shrink-0">
             <a href="#how-it-works" className="hover:text-amber-400 transition-colors">How It Works</a>
             <a href="#architecture" className="hover:text-amber-400 transition-colors">Integrated Systems</a>
             <a href="#features" className="hover:text-amber-400 transition-colors">Safety & G&SR Rules</a>
@@ -70,20 +68,21 @@ export const LandingPage: React.FC = () => {
           </nav>
 
           {/* Action CTAs */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             <Link
               to="/login"
-              className="text-xs font-semibold text-slate-200 hover:text-white px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 transition-colors flex items-center gap-1.5"
+              title="IR-SSO Login"
+              className="text-xs font-semibold text-slate-200 hover:text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition-colors flex items-center gap-1.5 shrink-0"
             >
-              <Lock className="w-3.5 h-3.5 text-amber-400" />
-              <span>IR-SSO Login</span>
+              <Lock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="hidden md:inline">IR-SSO Login</span>
             </Link>
             <Link
               to="/dashboard"
-              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-4 py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5 shrink-0 active:scale-95"
+              className="text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg shadow-sm transition-all flex items-center gap-1.5 shrink-0 active:scale-95 whitespace-nowrap"
             >
               <span>Command Center</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
             </Link>
           </div>
         </div>
@@ -151,13 +150,13 @@ export const LandingPage: React.FC = () => {
           {/* Interactive Stylized Hero Visualizer */}
           <div className="bg-slate-900/95 rounded-2xl border border-slate-700 p-3 sm:p-6 shadow-2xl overflow-hidden backdrop-blur-md w-full max-w-full min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 sm:pb-4 mb-3 sm:mb-4 border-b border-slate-800 text-xs">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span className="font-bold font-mono text-white text-xs sm:text-sm">
+                <span className="font-bold font-mono text-white text-[11px] sm:text-sm truncate">
                   LIVE CORRIDOR TELEMETRY: HOWRAH (HWH) — ASANSOL (ASN)
                 </span>
               </div>
-              <div className="flex items-center gap-2 font-mono text-[11px] text-slate-400">
+              <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] text-slate-400 shrink-0">
                 <span className="text-amber-400 font-bold">● G-48 BLOCK SANCTIONED</span>
                 <span>• CP-SAT SOLVER ACTIVE</span>
               </div>
@@ -165,7 +164,7 @@ export const LandingPage: React.FC = () => {
 
             {/* Visualizer Track diagram */}
             <div className="relative py-6 px-2 bg-slate-950/80 rounded-xl border border-slate-800">
-              <div className="flex justify-between items-center text-[11px] font-mono text-slate-400 mb-2">
+              <div className="flex justify-between items-center text-[10px] sm:text-[11px] font-mono text-slate-400 mb-2">
                 <span>HWH (KM 0)</span>
                 <span>BWN (KM 106)</span>
                 <span>DGR (KM 171)</span>
@@ -176,7 +175,7 @@ export const LandingPage: React.FC = () => {
                 <div className="w-[30%] bg-amber-500 h-full animate-pulse" title="Caution Order Active - TSR 30 kmph" />
                 <div className="w-[30%] bg-blue-600 h-full" title="Shadow Maintenance Block Active" />
               </div>
-              <div className="grid grid-cols-3 gap-2 mt-4 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-4 text-center">
                 <div className="p-2 rounded bg-slate-900 border border-slate-800">
                   <span className="text-[10px] text-slate-400 block font-mono">Civil Engineering (TMS)</span>
                   <span className="text-xs font-bold text-sky-400">Track Tamping (CSM-42)</span>
